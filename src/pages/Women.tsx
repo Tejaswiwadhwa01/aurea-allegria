@@ -1,12 +1,14 @@
+
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import CartButton from "@/components/CartButton";
-import { Heart, User, Menu, X, ArrowRight } from "lucide-react";
+import { Heart, User, Menu, X, ArrowRight, ChevronDown } from "lucide-react";
 
 const Women = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showWomenDropdown, setShowWomenDropdown] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,6 +25,10 @@ const Women = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleWomenDropdown = () => {
+    setShowWomenDropdown(!showWomenDropdown);
   };
 
   const fadeInUpVariants = {
@@ -91,12 +97,44 @@ const Women = () => {
             >
               Home
             </Link>
-            <Link
-              to="/women"
-              className="text-sm tracking-wide text-[#a67c52] transition-colors duration-300"
-            >
-              Shop Women
-            </Link>
+            <div className="relative">
+              <button
+                onClick={toggleWomenDropdown}
+                className="text-sm tracking-wide text-[#a67c52] flex items-center transition-colors duration-300"
+              >
+                Shop Women
+                <ChevronDown size={16} className={`ml-1 transition-transform duration-300 ${showWomenDropdown ? 'rotate-180' : ''}`} />
+              </button>
+              
+              {showWomenDropdown && (
+                <div className="absolute top-full left-0 mt-1 w-48 bg-white shadow-md z-50 py-2">
+                  <Link 
+                    to="/women/shirts" 
+                    className="block px-4 py-2 text-sm hover:bg-[#f8f5f2] hover:text-[#a67c52] transition-colors"
+                  >
+                    Shirts & Blouses
+                  </Link>
+                  <Link 
+                    to="/women/dresses" 
+                    className="block px-4 py-2 text-sm hover:bg-[#f8f5f2] hover:text-[#a67c52] transition-colors"
+                  >
+                    Dresses
+                  </Link>
+                  <Link 
+                    to="/women/outerwear" 
+                    className="block px-4 py-2 text-sm hover:bg-[#f8f5f2] hover:text-[#a67c52] transition-colors"
+                  >
+                    Outerwear
+                  </Link>
+                  <Link 
+                    to="/women/knitwear" 
+                    className="block px-4 py-2 text-sm hover:bg-[#f8f5f2] hover:text-[#a67c52] transition-colors"
+                  >
+                    Knitwear
+                  </Link>
+                </div>
+              )}
+            </div>
             <Link
               to="/men"
               className="text-sm tracking-wide hover:text-[#a67c52] transition-colors duration-300"
@@ -135,7 +173,7 @@ const Women = () => {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay - same as in Index.tsx */}
+      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -153,13 +191,48 @@ const Women = () => {
               >
                 Home
               </Link>
-              <Link
-                to="/women"
-                className="text-xl tracking-wide border-b border-[#e2dcd5] pb-4"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                Shop Women
-              </Link>
+              <div>
+                <button 
+                  className="text-xl tracking-wide border-b border-[#e2dcd5] pb-4 w-full text-left flex justify-between items-center"
+                  onClick={toggleWomenDropdown}
+                >
+                  Shop Women
+                  <ChevronDown size={16} className={`transition-transform ${showWomenDropdown ? 'rotate-180' : ''}`} />
+                </button>
+                
+                {showWomenDropdown && (
+                  <div className="pl-4 mt-4 space-y-4">
+                    <Link
+                      to="/women/shirts"
+                      className="block text-lg tracking-wide pb-2"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Shirts & Blouses
+                    </Link>
+                    <Link
+                      to="/women/dresses"
+                      className="block text-lg tracking-wide pb-2"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Dresses
+                    </Link>
+                    <Link
+                      to="/women/outerwear"
+                      className="block text-lg tracking-wide pb-2"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Outerwear
+                    </Link>
+                    <Link
+                      to="/women/knitwear"
+                      className="block text-lg tracking-wide pb-2"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Knitwear
+                    </Link>
+                  </div>
+                )}
+              </div>
               <Link
                 to="/men"
                 className="text-xl tracking-wide border-b border-[#e2dcd5] pb-4"
@@ -302,7 +375,7 @@ const Women = () => {
         </div>
       </main>
 
-      {/* Footer - same as in Index.tsx */}
+      {/* Footer */}
       <footer className="bg-[#262626] text-[#e2dcd5] py-16">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
