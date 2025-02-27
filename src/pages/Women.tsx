@@ -59,12 +59,18 @@ const Women = () => {
     },
     {
       id: 3,
+      name: "Jeans & Trousers",
+      image: "/lovable-uploads/cc63a636-1d5d-4a6f-9763-36409db04d47.png",
+      link: "/women/jeans"
+    },
+    {
+      id: 4,
       name: "Outerwear",
       image: "https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80",
       link: "/women/outerwear"
     },
     {
-      id: 4,
+      id: 5,
       name: "Knitwear",
       image: "https://images.unsplash.com/photo-1550614000-4895a10e1bfd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
       link: "/women/knitwear"
@@ -119,6 +125,12 @@ const Women = () => {
                     className="block px-4 py-2 text-sm hover:bg-[#f8f5f2] hover:text-[#a67c52] transition-colors"
                   >
                     Dresses
+                  </Link>
+                  <Link 
+                    to="/women/jeans" 
+                    className="block px-4 py-2 text-sm hover:bg-[#f8f5f2] hover:text-[#a67c52] transition-colors"
+                  >
+                    Jeans & Trousers
                   </Link>
                   <Link 
                     to="/women/outerwear" 
@@ -217,6 +229,13 @@ const Women = () => {
                       Dresses
                     </Link>
                     <Link
+                      to="/women/jeans"
+                      className="block text-lg tracking-wide pb-2"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Jeans & Trousers
+                    </Link>
+                    <Link
                       to="/women/outerwear"
                       className="block text-lg tracking-wide pb-2"
                       onClick={() => setIsMenuOpen(false)}
@@ -294,7 +313,7 @@ const Women = () => {
 
           {/* Categories */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-            {categories.map((category, index) => (
+            {categories.slice(0, 4).map((category, index) => (
               <motion.div
                 key={category.id}
                 initial="hidden"
