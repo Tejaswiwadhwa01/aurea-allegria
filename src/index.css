@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@300;400;500;600;700&family=Montserrat:wght@300;400;500;600&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -96,6 +99,65 @@
   }
 
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
   }
+  
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: #f1f1f1;
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: #d1ccc4;
+    border-radius: 4px;
+  }
+  
+  ::-webkit-scrollbar-thumb:hover {
+    background: #a67c52;
+  }
+}
+
+/* Story link underline animation */
+.story-link {
+  @apply relative inline-block;
+}
+
+.story-link:after {
+  content: '';
+  @apply absolute w-full scale-x-0 h-0.5 bottom-0 left-0 bg-[#a67c52] origin-bottom-right transition-transform duration-300;
+}
+
+.story-link:hover:after {
+  @apply scale-x-100 origin-bottom-left;
+}
+
+/* Hover scale animation */
+.hover-scale {
+  @apply transition-transform duration-200 hover:scale-105;
+}
+
+/* Image hover zoom */
+.image-zoom {
+  @apply transition-transform duration-700 ease-out;
+}
+
+.image-zoom:hover {
+  @apply scale-105;
+}
+
+/* Ensure all animations are smooth */
+* {
+  @apply transition-property-[color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter];
+  @apply transition-timing-function-[cubic-bezier(0.4,0,0.2,1)];
+  @apply transition-duration-150;
 }
