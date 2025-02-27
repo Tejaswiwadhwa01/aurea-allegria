@@ -156,8 +156,14 @@
 }
 
 /* Ensure all animations are smooth */
+@layer utilities {
+  .smooth-transitions {
+    transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+}
+
 * {
-  @apply transition-property-[color,background-color,border-color,text-decoration-color,fill,stroke,opacity,box-shadow,transform,filter,backdrop-filter];
-  @apply transition-timing-function-[cubic-bezier(0.4,0,0.2,1)];
-  @apply transition-duration-150;
+  @apply smooth-transitions;
 }
