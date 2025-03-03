@@ -1,10 +1,11 @@
+
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import CartButton from "@/components/CartButton";
-import { Heart, User, Menu, X, ArrowRight, ChevronDown } from "lucide-react";
+import { Heart, User, Menu, X, ShoppingBag, ChevronDown } from "lucide-react";
 
-const Men = () => {
+const MenBlazers = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showWomenDropdown, setShowWomenDropdown] = useState(false);
@@ -48,24 +49,56 @@ const Men = () => {
     }),
   };
 
-  const categories = [
+  const products = [
     {
       id: 1,
-      name: "Shirts & T-shirts",
-      image: "/lovable-uploads/db2738f0-431c-4aaf-9508-58e5c8b5f3da.png",
-      link: "/men/shirts"
+      name: "Double Breasted Blazer",
+      price: 169.90,
+      image: "/lovable-uploads/db397e4f-3b5a-4cc9-823d-f9dc8c81de8d.png",
+      color: "Light Gray",
+      isSale: false
     },
     {
       id: 2,
-      name: "Trousers & Jeans",
-      image: "/lovable-uploads/68d3cb42-3f2c-4b47-b382-e97174b743a4.png",
-      link: "/men/jeans"
+      name: "Classic Fit Blazer",
+      price: 159.90,
+      image: "/lovable-uploads/acb42df1-d4a4-4c54-a263-1f5fef5c4354.png",
+      color: "Navy Blue",
+      isSale: false
     },
     {
       id: 3,
-      name: "Blazers",
-      image: "/lovable-uploads/0ddda685-8c83-4c1b-8af7-9bf7c1be296e.png",
-      link: "/men/blazers"
+      name: "Structured Blazer",
+      price: 149.90,
+      image: "/lovable-uploads/e97b26f1-fe3c-4cae-ab2f-26307912bbc9.png",
+      color: "Black",
+      isSale: true,
+      salePrice: 119.90
+    },
+    {
+      id: 4,
+      name: "Linen Blend Blazer",
+      price: 179.90,
+      image: "/lovable-uploads/a2d588db-07ba-461d-8be3-0a2107d73d11.png",
+      color: "Cream",
+      isSale: false
+    },
+    {
+      id: 5,
+      name: "Semiformal Blazer",
+      price: 165.90,
+      image: "/lovable-uploads/fbe7887e-c9db-4f6d-9bc2-3d79adc5358e.png",
+      color: "Dark Gray",
+      isSale: true,
+      salePrice: 129.90
+    },
+    {
+      id: 6,
+      name: "Formal Blazer",
+      price: 189.90,
+      image: "/lovable-uploads/b7cd9e37-3b0f-4745-a7be-f6db931224cd.png",
+      color: "Black",
+      isSale: false
     }
   ];
 
@@ -164,7 +197,7 @@ const Men = () => {
                   </Link>
                   <Link 
                     to="/men/blazers" 
-                    className="block px-4 py-2 text-sm hover:bg-[#f8f5f2] hover:text-[#a67c52] transition-colors"
+                    className="block px-4 py-2 text-sm hover:bg-[#f8f5f2] hover:text-[#a67c52] transition-colors text-[#a67c52]"
                   >
                     Blazers
                   </Link>
@@ -297,7 +330,7 @@ const Men = () => {
                     </Link>
                     <Link
                       to="/men/blazers"
-                      className="block text-lg tracking-wide pb-2"
+                      className="block text-lg tracking-wide pb-2 text-[#a67c52]"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Blazers
@@ -348,94 +381,99 @@ const Men = () => {
       {/* Main Content */}
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-6">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="text-4xl md:text-5xl font-serif font-light mb-12 text-center"
-          >
-            Men's Collection
-          </motion.h1>
-
-          {/* Categories */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
-            {categories.map((category, index) => (
+          <div className="mb-10 flex flex-col md:flex-row md:items-center justify-between">
+            <div>
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+                className="text-3xl md:text-4xl font-serif font-light mb-2"
+              >
+                Men's Blazers
+              </motion.h1>
+              <p className="text-[#595959] max-w-2xl">
+                Discover our collection of premium blazers that combine contemporary style with timeless craftsmanship.
+              </p>
+            </div>
+            
+            <div className="mt-6 md:mt-0 flex items-center space-x-4">
+              <div className="relative">
+                <select className="bg-transparent border border-[#d1c9c0] px-4 py-2 pr-8 appearance-none text-sm rounded-none focus:outline-none focus:border-[#a67c52]">
+                  <option>Sort by: Featured</option>
+                  <option>Price: Low to High</option>
+                  <option>Price: High to Low</option>
+                  <option>Newest</option>
+                </select>
+                <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
+              
+              <div className="relative">
+                <select className="bg-transparent border border-[#d1c9c0] px-4 py-2 pr-8 appearance-none text-sm rounded-none focus:outline-none focus:border-[#a67c52]">
+                  <option>Filter by</option>
+                  <option>Black</option>
+                  <option>Gray</option>
+                  <option>Cream</option>
+                  <option>Sale</option>
+                </select>
+                <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+              </div>
+            </div>
+          </div>
+          
+          {/* Products Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            {products.map((product, index) => (
               <motion.div
-                key={category.id}
+                key={product.id}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-100px" }}
                 custom={index}
                 variants={fadeInUpVariants}
                 className="group"
               >
-                <Link to={category.link} className="block">
-                  <div className="aspect-[3/4] overflow-hidden relative mb-4">
-                    <img
-                      src={category.image}
-                      alt={category.name}
-                      className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  </div>
-                  <h2 className="text-xl font-serif font-light text-center mb-2">{category.name}</h2>
-                  <div className="flex justify-center">
-                    <span className="text-sm flex items-center border-b border-[#262626] pb-1 group-hover:text-[#a67c52] group-hover:border-[#a67c52] transition-colors">
-                      Shop Collection
-                      <ArrowRight size={14} className="ml-2 transition-transform group-hover:translate-x-1" />
-                    </span>
-                  </div>
-                </Link>
+                <div className="relative aspect-[3/4] overflow-hidden mb-4">
+                  <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
+                  />
+                  {product.isSale && (
+                    <div className="absolute top-3 right-3 bg-[#a67c52] text-white text-xs font-medium px-2 py-1">
+                      SALE
+                    </div>
+                  )}
+                  <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  <button
+                    aria-label="Add to cart"
+                    className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm px-6 py-3 text-sm flex items-center border border-[#d1c9c0] shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white"
+                  >
+                    <ShoppingBag size={16} className="mr-2" />
+                    Add to Cart
+                  </button>
+                  <button
+                    aria-label="Add to favorites"
+                    className="absolute top-3 left-3 bg-white/80 p-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white"
+                  >
+                    <Heart size={16} />
+                  </button>
+                </div>
+                <div className="text-center">
+                  <h3 className="text-base font-medium mb-1">{product.name}</h3>
+                  <p className="text-[#595959] text-sm mb-2">{product.color}</p>
+                  <p className="text-sm">
+                    {product.isSale ? (
+                      <>
+                        <span className="line-through text-[#8c8c8c] mr-2">${product.price.toFixed(2)}</span>
+                        <span className="text-[#a67c52]">${product.salePrice?.toFixed(2)}</span>
+                      </>
+                    ) : (
+                      <span>${product.price.toFixed(2)}</span>
+                    )}
+                  </p>
+                </div>
               </motion.div>
             ))}
-          </div>
-
-          {/* Featured Section */}
-          <div className="mb-20">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl font-serif font-light mb-4">Featured Collection</h2>
-              <p className="text-[#595959] max-w-2xl mx-auto">
-                Discover our curated selection of premium menswear that embodies timeless sophistication 
-                and impeccable craftsmanship.
-              </p>
-            </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <div className="aspect-[3/4] bg-[#e9e5e0] col-span-2 relative overflow-hidden group">
-                <img
-                  src="/lovable-uploads/209a5d7f-cd00-48cf-bc43-2c22c665837d.png"
-                  alt="Featured collection"
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="absolute bottom-10 left-10 right-10">
-                  <h3 className="text-2xl font-serif font-light mb-4 text-white">Summer Essentials</h3>
-                  <Link 
-                    to="/collections/summer"
-                    className="inline-block bg-white/10 backdrop-blur-sm border border-white/30 text-white px-6 py-3 text-sm hover:bg-white/20 transition-all duration-300"
-                  >
-                    View Collection
-                  </Link>
-                </div>
-              </div>
-              <div className="aspect-[3/4] bg-[#e9e5e0] relative overflow-hidden group">
-                <img
-                  src="/lovable-uploads/68cee8c0-6125-4772-9d87-75eb8a328746.png"
-                  alt="New arrivals"
-                  className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                <div className="absolute bottom-10 left-10 right-10">
-                  <h3 className="text-2xl font-serif font-light mb-4 text-white">New Arrivals</h3>
-                  <Link 
-                    to="/new-arrivals"
-                    className="inline-block bg-white/10 backdrop-blur-sm border border-white/30 text-white px-6 py-3 text-sm hover:bg-white/20 transition-all duration-300"
-                  >
-                    Shop Now
-                  </Link>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </main>
@@ -491,4 +529,4 @@ const Men = () => {
   );
 };
 
-export default Men;
+export default MenBlazers;
