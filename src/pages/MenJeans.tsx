@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -52,59 +51,74 @@ const MenJeans = () => {
   const products = [
     {
       id: 1,
-      name: "Regular Fit Jeans",
-      price: 79.90,
-      image: "/lovable-uploads/79038d0d-6243-4121-94c9-60a8f471a3f6.png",
-      color: "Medium Blue",
+      name: "Wool Blend Trousers",
+      price: 89.90,
+      image: "/lovable-uploads/2b4cc953-4185-4a89-8489-2ac1742e300e.png",
+      color: "Gray",
       isSale: false,
     },
     {
       id: 2,
-      name: "Wide Leg Jeans",
-      price: 89.90,
-      image: "/lovable-uploads/85364bf3-9aea-45d3-b683-4ecdab2a4506.png",
-      color: "Light Wash",
+      name: "Wide Leg Wool Trousers",
+      price: 99.90,
+      image: "/lovable-uploads/3bc96d4c-54fa-41bf-8dac-fd227a9943fd.png",
+      color: "Gray",
       isSale: false,
     },
     {
       id: 3,
       name: "Cargo Pants",
-      price: 99.90,
-      image: "/lovable-uploads/660b01cd-c1b7-4e1e-bb4d-53c44d8ec9a2.png",
+      price: 79.90,
+      image: "/lovable-uploads/9a1987e1-b6d0-4090-9288-64b49772ef69.png",
       color: "Beige",
       isSale: true,
-      salePrice: 69.90,
+      salePrice: 59.90,
     },
     {
       id: 4,
-      name: "Straight Cut Jeans",
+      name: "Utility Cargo Pants",
       price: 79.90,
-      image: "/lovable-uploads/1f338303-e1f1-461b-849e-b0c0c9ab2e2b.png",
-      color: "Blue",
+      image: "/lovable-uploads/2085bde6-117d-4b2a-94f6-3af0b757a40d.png",
+      color: "Beige",
       isSale: false,
     },
     {
       id: 5,
-      name: "Wool Trousers",
-      price: 109.90,
-      image: "/lovable-uploads/0766de09-8b17-4894-b1b0-13a75d1c6de3.png",
-      color: "Gray",
+      name: "Straight Fit Jeans",
+      price: 69.90,
+      image: "/lovable-uploads/f32ffea7-d650-41f0-93e5-a1b30aa6fd27.png",
+      color: "Medium Wash",
       isSale: false,
     },
     {
       id: 6,
-      name: "Drawstring Cargo Pants",
-      price: 99.90,
-      image: "/lovable-uploads/551d822d-081e-4581-aadc-f182422432d5.png",
-      color: "Beige",
+      name: "Relaxed Fit Jeans",
+      price: 69.90,
+      image: "/lovable-uploads/d01f05d3-d1d9-485a-ac68-2131547dbbc3.png",
+      color: "Light Wash",
       isSale: true,
-      salePrice: 69.90,
+      salePrice: 49.90,
+    },
+    {
+      id: 7,
+      name: "Light Wash Jeans",
+      price: 79.90,
+      image: "/lovable-uploads/c2c48dab-9c36-48cc-a722-9e2c39587e69.png",
+      color: "Light Blue",
+      isSale: false,
+    },
+    {
+      id: 8,
+      name: "Relaxed Fit Light Jeans",
+      price: 69.90,
+      image: "/lovable-uploads/af296436-f8a9-46f1-a8cd-500138089bd3.png",
+      color: "Light Wash",
+      isSale: false,
     }
   ];
 
   return (
     <div className="min-h-screen bg-[#f8f5f2] text-[#262626]">
-      {/* Header/Navigation */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled ? "bg-white/90 backdrop-blur-md py-4 shadow-sm" : "py-6 bg-transparent"
@@ -236,7 +250,6 @@ const MenJeans = () => {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -378,7 +391,6 @@ const MenJeans = () => {
         )}
       </AnimatePresence>
 
-      {/* Main Content */}
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-6">
           <div className="mb-10 flex flex-col md:flex-row md:items-center justify-between">
@@ -410,9 +422,9 @@ const MenJeans = () => {
               <div className="relative">
                 <select className="bg-transparent border border-[#d1c9c0] px-4 py-2 pr-8 appearance-none text-sm rounded-none focus:outline-none focus:border-[#a67c52]">
                   <option>Filter by</option>
-                  <option>Blue</option>
-                  <option>Beige</option>
                   <option>Gray</option>
+                  <option>Beige</option>
+                  <option>Blue</option>
                   <option>Sale</option>
                 </select>
                 <ChevronDown size={14} className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none" />
@@ -420,8 +432,7 @@ const MenJeans = () => {
             </div>
           </div>
           
-          {/* Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16">
             {products.map((product, index) => (
               <motion.div
                 key={product.id}
@@ -478,7 +489,6 @@ const MenJeans = () => {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="bg-[#262626] text-[#e2dcd5] py-16">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
