@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, ShoppingBag, User, Menu, X, ArrowRight } from "lucide-react";
@@ -324,21 +323,21 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             <FeaturedProduct
-              image="https://images.unsplash.com/photo-1525507119028-ed4c629a60a3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1035&q=80"
-              name="Cashmere Tailored Coat"
-              price="2,890"
+              image="/lovable-uploads/b5ccc93e-da1d-4845-a8b0-b663264741a0.png"
+              name="Tailored Shirt"
+              price="790"
               index={0}
             />
             <FeaturedProduct
-              image="https://images.unsplash.com/photo-1539109136881-3be0616acf4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80"
-              name="Silk Evening Dress"
+              image="/lovable-uploads/0a1916ea-15f7-49fa-afc7-02fb3f034c72.png"
+              name="Evening Dress"
               price="1,790"
               index={1}
             />
             <FeaturedProduct
-              image="https://images.unsplash.com/photo-1550614000-4895a10e1bfd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80"
-              name="Merino Wool Ensemble"
-              price="3,250"
+              image="/lovable-uploads/8e5069b4-1059-4a78-950e-dbe06d15a4ba.png"
+              name="Designer Blazer"
+              price="2,250"
               index={2}
             />
           </div>

@@ -16,6 +16,8 @@ import Men from "./pages/Men";
 import MenShirts from "./pages/MenShirts";
 import MenJeans from "./pages/MenJeans";
 import MenBlazers from "./pages/MenBlazers";
+import Collections from "./pages/Collections";
+import FeaturedCollections from "./pages/FeaturedCollections";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +39,8 @@ const App = () => (
           <Route path="/men/shirts" element={<MenShirts />} />
           <Route path="/men/jeans" element={<MenJeans />} />
           <Route path="/men/blazers" element={<MenBlazers />} />
+          <Route path="/collections" element={<Collections />} />
+          <Route path="/featured-collections" element={<FeaturedCollections />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
