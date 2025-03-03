@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import CartButton from "@/components/CartButton";
 import { Heart, User, Menu, X, ArrowRight, ChevronDown } from "lucide-react";
 
-const Women = () => {
+const Men = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showWomenDropdown, setShowWomenDropdown] = useState(false);
@@ -52,33 +52,21 @@ const Women = () => {
   const categories = [
     {
       id: 1,
-      name: "Shirts & Blouses",
-      image: "/lovable-uploads/df24ed1b-8390-4c44-99d9-1bbd3dcebd04.png",
-      link: "/women/shirts"
+      name: "Shirts & T-shirts",
+      image: "/lovable-uploads/5fb886d7-b46f-489c-9e14-9413fa67c723.png",
+      link: "/men/shirts"
     },
     {
       id: 2,
-      name: "Dresses",
-      image: "https://images.unsplash.com/photo-1539109136881-3be0616acf4b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
-      link: "/women/dresses"
+      name: "Trousers & Jeans",
+      image: "/lovable-uploads/b0ca5709-48a6-4c13-a1f6-0ec666924f87.png",
+      link: "/men/jeans"
     },
     {
       id: 3,
-      name: "Jeans & Trousers",
-      image: "/lovable-uploads/cc63a636-1d5d-4a6f-9763-36409db04d47.png",
-      link: "/women/jeans"
-    },
-    {
-      id: 4,
-      name: "Accessories",
-      image: "/lovable-uploads/07870e4b-0f9d-4cd8-8421-39eff3d10467.png",
-      link: "/women/accessories"
-    },
-    {
-      id: 5,
-      name: "Knitwear",
-      image: "https://images.unsplash.com/photo-1550614000-4895a10e1bfd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
-      link: "/women/knitwear"
+      name: "Blazers",
+      image: "/lovable-uploads/5e1afb42-1c0e-4b45-9b49-62a1727f19d1.png",
+      link: "/men/blazers"
     }
   ];
 
@@ -111,7 +99,7 @@ const Women = () => {
             <div className="relative">
               <button
                 onClick={toggleWomenDropdown}
-                className="text-sm tracking-wide text-[#a67c52] flex items-center transition-colors duration-300"
+                className="text-sm tracking-wide hover:text-[#a67c52] flex items-center transition-colors duration-300"
               >
                 Shop Women
                 <ChevronDown size={16} className={`ml-1 transition-transform duration-300 ${showWomenDropdown ? 'rotate-180' : ''}`} />
@@ -155,7 +143,7 @@ const Women = () => {
             <div className="relative">
               <button
                 onClick={toggleMenDropdown}
-                className="text-sm tracking-wide hover:text-[#a67c52] flex items-center transition-colors duration-300"
+                className="text-sm tracking-wide text-[#a67c52] flex items-center transition-colors duration-300"
               >
                 Shop Men
                 <ChevronDown size={16} className={`ml-1 transition-transform duration-300 ${showMenDropdown ? 'rotate-180' : ''}`} />
@@ -367,12 +355,12 @@ const Women = () => {
             transition={{ duration: 0.8 }}
             className="text-4xl md:text-5xl font-serif font-light mb-12 text-center"
           >
-            Women's Collection
+            Men's Collection
           </motion.h1>
 
           {/* Categories */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
-            {categories.slice(0, 4).map((category, index) => (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-20">
+            {categories.map((category, index) => (
               <motion.div
                 key={category.id}
                 initial="hidden"
@@ -408,7 +396,7 @@ const Women = () => {
             <div className="text-center mb-12">
               <h2 className="text-3xl font-serif font-light mb-4">Featured Collection</h2>
               <p className="text-[#595959] max-w-2xl mx-auto">
-                Discover our curated selection of premium pieces that embody timeless sophistication 
+                Discover our curated selection of premium menswear that embodies timeless sophistication 
                 and impeccable craftsmanship.
               </p>
             </div>
@@ -416,7 +404,7 @@ const Women = () => {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div className="aspect-[3/4] bg-[#e9e5e0] col-span-2 relative overflow-hidden group">
                 <img
-                  src="/lovable-uploads/906b2262-8296-4711-8758-97556020bde4.png"
+                  src="/lovable-uploads/9f3e9005-58d9-4fbd-a750-feb31705fe1c.png"
                   alt="Featured collection"
                   className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
@@ -433,7 +421,7 @@ const Women = () => {
               </div>
               <div className="aspect-[3/4] bg-[#e9e5e0] relative overflow-hidden group">
                 <img
-                  src="/lovable-uploads/0a1916ea-15f7-49fa-afc7-02fb3f034c72.png"
+                  src="/lovable-uploads/8becde89-6115-4779-be29-c2b2d607b542.png"
                   alt="New arrivals"
                   className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                 />
@@ -504,4 +492,4 @@ const Women = () => {
   );
 };
 
-export default Women;
+export default Men;
