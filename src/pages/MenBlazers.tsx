@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -54,7 +53,7 @@ const MenBlazers = () => {
       id: 1,
       name: "Double Breasted Blazer",
       price: 169.90,
-      image: "/lovable-uploads/db397e4f-3b5a-4cc9-823d-f9dc8c81de8d.png",
+      image: "/lovable-uploads/bdfb4268-766c-4592-8b8a-74129dad3352.png",
       color: "Light Gray",
       isSale: false
     },
@@ -62,41 +61,57 @@ const MenBlazers = () => {
       id: 2,
       name: "Classic Fit Blazer",
       price: 159.90,
-      image: "/lovable-uploads/acb42df1-d4a4-4c54-a263-1f5fef5c4354.png",
-      color: "Navy Blue",
+      image: "/lovable-uploads/d6c2fd05-8a7c-4315-a243-e68e8e52f909.png",
+      color: "Gray",
       isSale: false
     },
     {
       id: 3,
       name: "Structured Blazer",
       price: 149.90,
-      image: "/lovable-uploads/e97b26f1-fe3c-4cae-ab2f-26307912bbc9.png",
-      color: "Black",
+      image: "/lovable-uploads/110f9e73-bd3c-43b3-b15b-f8275a3b9bf3.png",
+      color: "Navy Blue",
       isSale: true,
       salePrice: 119.90
     },
     {
       id: 4,
-      name: "Linen Blend Blazer",
+      name: "Slim Fit Blazer",
       price: 179.90,
-      image: "/lovable-uploads/a2d588db-07ba-461d-8be3-0a2107d73d11.png",
-      color: "Cream",
+      image: "/lovable-uploads/b983d79d-5727-455d-9e9f-b18c47157b2b.png",
+      color: "Navy Blue",
       isSale: false
     },
     {
       id: 5,
-      name: "Semiformal Blazer",
+      name: "Double Breasted Cream Blazer",
       price: 165.90,
-      image: "/lovable-uploads/fbe7887e-c9db-4f6d-9bc2-3d79adc5358e.png",
-      color: "Dark Gray",
+      image: "/lovable-uploads/53e881e8-553b-4b4a-8e0d-14e0b1b979c1.png",
+      color: "Cream",
       isSale: true,
       salePrice: 129.90
     },
     {
       id: 6,
-      name: "Formal Blazer",
+      name: "Linen Blend Blazer",
       price: 189.90,
-      image: "/lovable-uploads/b7cd9e37-3b0f-4745-a7be-f6db931224cd.png",
+      image: "/lovable-uploads/f390be45-e10f-4385-9ea6-daa3457951cb.png",
+      color: "Cream",
+      isSale: false
+    },
+    {
+      id: 7,
+      name: "Formal Blazer",
+      price: 199.90,
+      image: "/lovable-uploads/087af264-1542-4a3e-b70d-d54edde9d8b7.png",
+      color: "Black",
+      isSale: false
+    },
+    {
+      id: 8,
+      name: "Classic Black Blazer",
+      price: 189.90,
+      image: "/lovable-uploads/8e14a9ae-8a47-45ce-8cb4-79abf01f95b1.png",
       color: "Black",
       isSale: false
     }
@@ -104,7 +119,6 @@ const MenBlazers = () => {
 
   return (
     <div className="min-h-screen bg-[#f8f5f2] text-[#262626]">
-      {/* Header/Navigation */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled ? "bg-white/90 backdrop-blur-md py-4 shadow-sm" : "py-6 bg-transparent"
@@ -236,7 +250,6 @@ const MenBlazers = () => {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
       <AnimatePresence>
         {isMenuOpen && (
           <motion.div
@@ -378,7 +391,6 @@ const MenBlazers = () => {
         )}
       </AnimatePresence>
 
-      {/* Main Content */}
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-6">
           <div className="mb-10 flex flex-col md:flex-row md:items-center justify-between">
@@ -420,8 +432,7 @@ const MenBlazers = () => {
             </div>
           </div>
           
-          {/* Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {products.map((product, index) => (
               <motion.div
                 key={product.id}
@@ -478,7 +489,6 @@ const MenBlazers = () => {
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="bg-[#262626] text-[#e2dcd5] py-16">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
