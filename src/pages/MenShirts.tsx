@@ -2,14 +2,16 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Heart, ShoppingBag, ChevronDown, Menu, X, User } from "lucide-react";
+import { Heart, ShoppingBag, ChevronDown, Menu, X, User, ChevronLeft, ChevronRight } from "lucide-react";
 import CartButton from "@/components/CartButton";
+import FeaturedProduct from "@/components/FeaturedProduct";
 
 const MenShirts = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showWomenDropdown, setShowWomenDropdown] = useState(false);
   const [showMenDropdown, setShowMenDropdown] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState<Record<number, number>>({});
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,54 +38,56 @@ const MenShirts = () => {
     setShowMenDropdown(!showMenDropdown);
   };
 
+  const handlePrevImage = (productId: number) => {
+    setActiveImageIndex((prev) => ({
+      ...prev,
+      [productId]: 0
+    }));
+  };
+
+  const handleNextImage = (productId: number) => {
+    setActiveImageIndex((prev) => ({
+      ...prev,
+      [productId]: 1
+    }));
+  };
+
   const products = [
     {
       id: 1,
       name: "Black Formal Shirt",
       price: "89.99",
-      image: "/lovable-uploads/02e6bdcc-5474-42bd-8aa7-daa1a641f22a.png"
+      images: [
+        "/lovable-uploads/fd880c76-67f0-4f43-98ab-523d37ccf6a8.png",
+        "/lovable-uploads/4fc87612-daf4-426d-b6ad-fec78f6900ca.png"
+      ]
     },
     {
       id: 2,
-      name: "Black Classic Shirt",
-      price: "79.99",
-      image: "/lovable-uploads/87021529-d05f-4535-be0f-c5de64d2946d.png"
+      name: "Blue Striped Shirt",
+      price: "69.99",
+      images: [
+        "/lovable-uploads/827d96b9-68a1-4cdb-a89f-bced5e57cd62.png",
+        "/lovable-uploads/ef4f5a58-af71-4ede-9eb7-a78ff44e981b.png"
+      ]
     },
     {
       id: 3,
-      name: "Light Blue Striped Shirt",
-      price: "69.99",
-      image: "/lovable-uploads/8d172262-f2e4-4f4b-9227-0f078cf8764f.png"
+      name: "Beige Linen Shirt",
+      price: "65.99",
+      images: [
+        "/lovable-uploads/da505da3-3aeb-48e8-ac09-f25d7fe54a51.png",
+        "/lovable-uploads/9e49cec3-e031-4e36-aacc-4e504e4a13c2.png"
+      ]
     },
     {
       id: 4,
-      name: "Blue Striped Shirt",
-      price: "69.99",
-      image: "/lovable-uploads/d300493f-4fd9-4a0e-9643-21a259c7cf40.png"
-    },
-    {
-      id: 5,
-      name: "Beige Short Sleeve Shirt",
-      price: "59.99",
-      image: "/lovable-uploads/0f1b35cd-b057-41d8-9ad2-3d972e8df4a4.png"
-    },
-    {
-      id: 6,
-      name: "Beige Linen Shirt",
-      price: "65.99",
-      image: "/lovable-uploads/163ca0ec-abb3-4057-a1a9-a768c5abf0ab.png"
-    },
-    {
-      id: 7,
       name: "Beige Striped Shirt",
       price: "69.99",
-      image: "/lovable-uploads/04516754-4133-4f71-8164-f9fea560e5e4.png"
-    },
-    {
-      id: 8,
-      name: "White Oxford Shirt",
-      price: "55.99",
-      image: "/lovable-uploads/d01350b7-6502-4baf-a248-54ccd60eadb5.png"
+      images: [
+        "/lovable-uploads/154ea1be-0a90-4084-bd82-abda73c9fb10.png",
+        "/lovable-uploads/e0ceb2a3-21ee-47f8-b042-b16ca61ff77c.png"
+      ]
     }
   ];
 
@@ -238,7 +242,7 @@ const MenShirts = () => {
           </div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 md:gap-12">
             {products.map((product, index) => (
               <motion.div
                 key={product.id}
@@ -247,14 +251,48 @@ const MenShirts = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="group relative"
               >
-                <div className="aspect-[3/4] bg-[#e9e5e0] mb-4 overflow-hidden">
+                <div className="aspect-[3/4] bg-[#e9e5e0] mb-4 overflow-hidden relative">
                   <img
-                    src={product.image}
+                    src={product.images[activeImageIndex[product.id] || 0]}
                     alt={product.name}
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
 
                   <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                  {/* Image navigation buttons */}
+                  <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4">
+                    <button 
+                      onClick={() => handlePrevImage(product.id)}
+                      className="w-8 h-8 bg-white/80 rounded-full flex items-center justify-center text-gray-800 opacity-0 group-hover:opacity-100 transition-opacity"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft size={18} />
+                    </button>
+                    <button 
+                      onClick={() => handleNextImage(product.id)}
+                      className="w-8 h-8 bg-white/80 rounded-full flex items-center justify-center text-gray-800 opacity-0 group-hover:opacity-100 transition-opacity"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight size={18} />
+                    </button>
+                  </div>
+
+                  {/* Image indicators */}
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+                    {product.images.map((_, idx) => (
+                      <button
+                        key={idx}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          (activeImageIndex[product.id] || 0) === idx 
+                            ? 'bg-white w-4' 
+                            : 'bg-white/50'
+                        }`}
+                        onClick={() => setActiveImageIndex(prev => ({...prev, [product.id]: idx}))}
+                        aria-label={`View image ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
 
                   <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transform translate-y-full group-hover:translate-y-0 transition-all duration-300">
                     <div className="flex justify-between items-center">
