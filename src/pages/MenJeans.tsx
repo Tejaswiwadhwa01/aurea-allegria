@@ -1,14 +1,16 @@
+
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import CartButton from "@/components/CartButton";
-import { Heart, User, Menu, X, ShoppingBag, ChevronDown } from "lucide-react";
+import { Heart, User, Menu, X, ShoppingBag, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 
 const MenJeans = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showWomenDropdown, setShowWomenDropdown] = useState(false);
   const [showMenDropdown, setShowMenDropdown] = useState(false);
+  const [activeImageIndex, setActiveImageIndex] = useState<Record<number, number>>({});
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,6 +37,20 @@ const MenJeans = () => {
     setShowMenDropdown(!showMenDropdown);
   };
 
+  const handlePrevImage = (productId: number) => {
+    setActiveImageIndex((prev) => ({
+      ...prev,
+      [productId]: 0
+    }));
+  };
+
+  const handleNextImage = (productId: number) => {
+    setActiveImageIndex((prev) => ({
+      ...prev,
+      [productId]: 1
+    }));
+  };
+
   const fadeInUpVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: (i: number) => ({
@@ -51,9 +67,12 @@ const MenJeans = () => {
   const products = [
     {
       id: 1,
-      name: "Wool Blend Trousers",
+      name: "Formal Wool Trousers",
       price: 89.90,
-      image: "/lovable-uploads/2b4cc953-4185-4a89-8489-2ac1742e300e.png",
+      images: [
+        "/lovable-uploads/b65bb2ce-26a0-4c17-b7a8-e2e7732a4ea9.png",
+        "/lovable-uploads/c479fac7-5a41-4121-9fd6-678e127c7510.png"
+      ],
       color: "Gray",
       isSale: false,
     },
@@ -61,24 +80,33 @@ const MenJeans = () => {
       id: 2,
       name: "Wide Leg Wool Trousers",
       price: 99.90,
-      image: "/lovable-uploads/3bc96d4c-54fa-41bf-8dac-fd227a9943fd.png",
+      images: [
+        "/lovable-uploads/c479fac7-5a41-4121-9fd6-678e127c7510.png",
+        "/lovable-uploads/b65bb2ce-26a0-4c17-b7a8-e2e7732a4ea9.png"
+      ],
       color: "Gray",
       isSale: false,
     },
     {
       id: 3,
-      name: "Cargo Pants",
+      name: "Utility Cargo Pants",
       price: 79.90,
-      image: "/lovable-uploads/9a1987e1-b6d0-4090-9288-64b49772ef69.png",
+      images: [
+        "/lovable-uploads/b6bb425e-4bcd-404d-8bea-e13e749f1f44.png",
+        "/lovable-uploads/1d4fb110-0efb-411e-a274-64273dbed090.png"
+      ],
       color: "Beige",
       isSale: true,
       salePrice: 59.90,
     },
     {
       id: 4,
-      name: "Utility Cargo Pants",
+      name: "Relaxed Cargo Pants",
       price: 79.90,
-      image: "/lovable-uploads/2085bde6-117d-4b2a-94f6-3af0b757a40d.png",
+      images: [
+        "/lovable-uploads/1d4fb110-0efb-411e-a274-64273dbed090.png",
+        "/lovable-uploads/b6bb425e-4bcd-404d-8bea-e13e749f1f44.png"
+      ],
       color: "Beige",
       isSale: false,
     },
@@ -86,7 +114,10 @@ const MenJeans = () => {
       id: 5,
       name: "Straight Fit Jeans",
       price: 69.90,
-      image: "/lovable-uploads/f32ffea7-d650-41f0-93e5-a1b30aa6fd27.png",
+      images: [
+        "/lovable-uploads/65f51470-90e8-452a-b18a-2cfac301caee.png",
+        "/lovable-uploads/d90dee1f-bb94-4724-b67e-77c1da808bbd.png"
+      ],
       color: "Medium Wash",
       isSale: false,
     },
@@ -94,16 +125,22 @@ const MenJeans = () => {
       id: 6,
       name: "Relaxed Fit Jeans",
       price: 69.90,
-      image: "/lovable-uploads/d01f05d3-d1d9-485a-ac68-2131547dbbc3.png",
-      color: "Light Wash",
+      images: [
+        "/lovable-uploads/d90dee1f-bb94-4724-b67e-77c1da808bbd.png",
+        "/lovable-uploads/65f51470-90e8-452a-b18a-2cfac301caee.png"
+      ],
+      color: "Medium Wash",
       isSale: true,
       salePrice: 49.90,
     },
     {
       id: 7,
-      name: "Light Wash Jeans",
+      name: "Vintage Wash Jeans",
       price: 79.90,
-      image: "/lovable-uploads/c2c48dab-9c36-48cc-a722-9e2c39587e69.png",
+      images: [
+        "/lovable-uploads/e9a63e25-5613-4fd1-a001-9b88c21f8168.png",
+        "/lovable-uploads/516f096a-295f-49cc-bde4-3867ada68f4b.png"
+      ],
       color: "Light Blue",
       isSale: false,
     },
@@ -111,7 +148,10 @@ const MenJeans = () => {
       id: 8,
       name: "Relaxed Fit Light Jeans",
       price: 69.90,
-      image: "/lovable-uploads/af296436-f8a9-46f1-a8cd-500138089bd3.png",
+      images: [
+        "/lovable-uploads/516f096a-295f-49cc-bde4-3867ada68f4b.png",
+        "/lovable-uploads/e9a63e25-5613-4fd1-a001-9b88c21f8168.png"
+      ],
       color: "Light Wash",
       isSale: false,
     }
@@ -445,7 +485,7 @@ const MenJeans = () => {
               >
                 <div className="relative aspect-[3/4] overflow-hidden mb-4">
                   <img
-                    src={product.image}
+                    src={product.images[activeImageIndex[product.id] || 0]}
                     alt={product.name}
                     className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                   />
@@ -455,6 +495,41 @@ const MenJeans = () => {
                     </div>
                   )}
                   <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  
+                  {/* Image navigation buttons */}
+                  <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4">
+                    <button 
+                      onClick={() => handlePrevImage(product.id)}
+                      className="w-8 h-8 bg-white/80 rounded-full flex items-center justify-center text-gray-800 opacity-0 group-hover:opacity-100 transition-opacity"
+                      aria-label="Previous image"
+                    >
+                      <ChevronLeft size={18} />
+                    </button>
+                    <button 
+                      onClick={() => handleNextImage(product.id)}
+                      className="w-8 h-8 bg-white/80 rounded-full flex items-center justify-center text-gray-800 opacity-0 group-hover:opacity-100 transition-opacity"
+                      aria-label="Next image"
+                    >
+                      <ChevronRight size={18} />
+                    </button>
+                  </div>
+
+                  {/* Image indicators */}
+                  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
+                    {product.images.map((_, idx) => (
+                      <button
+                        key={idx}
+                        className={`w-2 h-2 rounded-full transition-all ${
+                          (activeImageIndex[product.id] || 0) === idx 
+                            ? 'bg-white w-4' 
+                            : 'bg-white/50'
+                        }`}
+                        onClick={() => setActiveImageIndex(prev => ({...prev, [product.id]: idx}))}
+                        aria-label={`View image ${idx + 1}`}
+                      />
+                    ))}
+                  </div>
+                  
                   <button
                     aria-label="Add to cart"
                     className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm px-6 py-3 text-sm flex items-center border border-[#d1c9c0] shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white"
