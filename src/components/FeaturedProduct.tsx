@@ -3,17 +3,36 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import { Heart, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useFavorites } from "@/contexts/FavoritesContext";
+import { useToast } from "@/hooks/use-toast";
 
 interface FeaturedProductProps {
   image: string;
   name: string;
   price: string;
   index: number;
+  id: number;
+  images?: string[];
+  color?: string;
+  material?: string;
+  isNew?: boolean;
 }
 
-const FeaturedProduct = ({ image, name, price, index }: FeaturedProductProps) => {
+const FeaturedProduct = ({ 
+  image, 
+  name, 
+  price, 
+  index,
+  id,
+  images = [],
+  color,
+  material,
+  isNew
+}: FeaturedProductProps) => {
   const [isHovered, setIsHovered] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
+  const { isFavorite, addToFavorites, removeFromFavorites } = useFavorites();
+  const { toast } = useToast();
 
   const fadeInUpVariants = {
     hidden: { opacity: 0, y: 20 },
@@ -26,6 +45,34 @@ const FeaturedProduct = ({ image, name, price, index }: FeaturedProductProps) =>
         ease: [0.22, 1, 0.36, 1],
       },
     }),
+  };
+
+  const handleFavoriteToggle = () => {
+    const product = {
+      id,
+      name,
+      price,
+      images: images.length > 0 ? images : [image],
+      color,
+      material,
+      isNew
+    };
+
+    if (isFavorite(id)) {
+      removeFromFavorites(id);
+      toast({
+        title: "Removed from favorites",
+        description: `${name} has been removed from your favorites.`,
+        duration: 3000,
+      });
+    } else {
+      addToFavorites(product);
+      toast({
+        title: "Added to favorites",
+        description: `${name} has been added to your favorites.`,
+        duration: 3000,
+      });
+    }
   };
 
   return (
@@ -74,16 +121,21 @@ const FeaturedProduct = ({ image, name, price, index }: FeaturedProductProps) =>
               <span>Add to Cart</span>
             </button>
             <button
-              className="ml-3 p-3 border border-[#e2dcd5] hover:border-[#a67c52] transition-colors"
-              aria-label="Add to favorites"
+              className={`ml-3 p-3 border transition-colors ${
+                isFavorite(id) 
+                  ? "border-[#a67c52] bg-[#a67c52]/10" 
+                  : "border-[#e2dcd5] hover:border-[#a67c52]"
+              }`}
+              aria-label={isFavorite(id) ? "Remove from favorites" : "Add to favorites"}
+              onClick={handleFavoriteToggle}
             >
-              <Heart size={18} />
+              <Heart size={18} fill={isFavorite(id) ? "#a67c52" : "none"} color={isFavorite(id) ? "#a67c52" : "currentColor"} />
             </button>
           </div>
         </div>
       </div>
 
-      <Link to="/product/1" className="block">
+      <Link to={`/product/${id}`} className="block">
         <h3 className="font-medium mb-2 transition-colors group-hover:text-[#a67c52]">{name}</h3>
         <p className="text-[#595959]">${price}</p>
       </Link>

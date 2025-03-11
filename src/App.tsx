@@ -1,39 +1,39 @@
 
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Toaster } from "./components/ui/toaster";
+import { FavoritesProvider } from "./contexts/FavoritesContext";
+
+// Pages
 import Index from "./pages/Index";
-import NotFound from "./pages/NotFound";
 import Women from "./pages/Women";
-import WomenShirts from "./pages/WomenShirts";
-import WomenDresses from "./pages/WomenDresses";
-import WomenJeans from "./pages/WomenJeans";
-import WomenKnitwear from "./pages/WomenKnitwear";
-import WomenAccessories from "./pages/WomenAccessories";
 import Men from "./pages/Men";
+import WomenJeans from "./pages/WomenJeans";
+import WomenDresses from "./pages/WomenDresses";
+import WomenKnitwear from "./pages/WomenKnitwear";
+import WomenShirts from "./pages/WomenShirts";
+import WomenAccessories from "./pages/WomenAccessories";
 import MenShirts from "./pages/MenShirts";
 import MenJeans from "./pages/MenJeans";
 import MenBlazers from "./pages/MenBlazers";
 import Collections from "./pages/Collections";
 import FeaturedCollections from "./pages/FeaturedCollections";
+import NotFound from "./pages/NotFound";
+import Favorites from "./pages/Favorites";
 
-const queryClient = new QueryClient();
+// Styles
+import "./App.css";
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
+function App() {
+  return (
+    <FavoritesProvider>
+      <Router>
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/women" element={<Women />} />
-          <Route path="/women/shirts" element={<WomenShirts />} />
-          <Route path="/women/dresses" element={<WomenDresses />} />
           <Route path="/women/jeans" element={<WomenJeans />} />
+          <Route path="/women/dresses" element={<WomenDresses />} />
           <Route path="/women/knitwear" element={<WomenKnitwear />} />
+          <Route path="/women/shirts" element={<WomenShirts />} />
           <Route path="/women/accessories" element={<WomenAccessories />} />
           <Route path="/men" element={<Men />} />
           <Route path="/men/shirts" element={<MenShirts />} />
@@ -41,12 +41,13 @@ const App = () => (
           <Route path="/men/blazers" element={<MenBlazers />} />
           <Route path="/collections" element={<Collections />} />
           <Route path="/featured-collections" element={<FeaturedCollections />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/favorites" element={<Favorites />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+        <Toaster />
+      </Router>
+    </FavoritesProvider>
+  );
+}
 
 export default App;
