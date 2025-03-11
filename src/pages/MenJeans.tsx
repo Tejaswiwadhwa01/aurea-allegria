@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -70,87 +69,42 @@ const MenJeans = () => {
       name: "Formal Wool Trousers",
       price: 89.90,
       images: [
-        "/lovable-uploads/b65bb2ce-26a0-4c17-b7a8-e2e7732a4ea9.png",
-        "/lovable-uploads/c479fac7-5a41-4121-9fd6-678e127c7510.png"
+        "/lovable-uploads/4909147a-0154-4ab7-9c19-c34a8f9c06b7.png",
+        "/lovable-uploads/ccdccb8b-7e4a-497f-8987-1411ac3b07bf.png"
       ],
       color: "Gray",
       isSale: false,
     },
     {
       id: 2,
-      name: "Wide Leg Wool Trousers",
-      price: 99.90,
-      images: [
-        "/lovable-uploads/c479fac7-5a41-4121-9fd6-678e127c7510.png",
-        "/lovable-uploads/b65bb2ce-26a0-4c17-b7a8-e2e7732a4ea9.png"
-      ],
-      color: "Gray",
-      isSale: false,
-    },
-    {
-      id: 3,
       name: "Utility Cargo Pants",
       price: 79.90,
       images: [
-        "/lovable-uploads/b6bb425e-4bcd-404d-8bea-e13e749f1f44.png",
-        "/lovable-uploads/1d4fb110-0efb-411e-a274-64273dbed090.png"
+        "/lovable-uploads/70af653b-36a6-4098-83da-e39456ffa189.png",
+        "/lovable-uploads/ebda48de-45c3-41eb-bc99-2a9e83f6ce85.png"
       ],
       color: "Beige",
       isSale: true,
       salePrice: 59.90,
     },
     {
-      id: 4,
-      name: "Relaxed Cargo Pants",
-      price: 79.90,
-      images: [
-        "/lovable-uploads/1d4fb110-0efb-411e-a274-64273dbed090.png",
-        "/lovable-uploads/b6bb425e-4bcd-404d-8bea-e13e749f1f44.png"
-      ],
-      color: "Beige",
-      isSale: false,
-    },
-    {
-      id: 5,
+      id: 3,
       name: "Straight Fit Jeans",
       price: 69.90,
       images: [
-        "/lovable-uploads/65f51470-90e8-452a-b18a-2cfac301caee.png",
-        "/lovable-uploads/d90dee1f-bb94-4724-b67e-77c1da808bbd.png"
+        "/lovable-uploads/78861e34-e394-43db-a2d8-a9b2488887a1.png",
+        "/lovable-uploads/a180905d-8f11-4105-997d-63c8f31c3017.png"
       ],
       color: "Medium Wash",
       isSale: false,
     },
     {
-      id: 6,
-      name: "Relaxed Fit Jeans",
-      price: 69.90,
-      images: [
-        "/lovable-uploads/d90dee1f-bb94-4724-b67e-77c1da808bbd.png",
-        "/lovable-uploads/65f51470-90e8-452a-b18a-2cfac301caee.png"
-      ],
-      color: "Medium Wash",
-      isSale: true,
-      salePrice: 49.90,
-    },
-    {
-      id: 7,
-      name: "Vintage Wash Jeans",
-      price: 79.90,
-      images: [
-        "/lovable-uploads/e9a63e25-5613-4fd1-a001-9b88c21f8168.png",
-        "/lovable-uploads/516f096a-295f-49cc-bde4-3867ada68f4b.png"
-      ],
-      color: "Light Blue",
-      isSale: false,
-    },
-    {
-      id: 8,
+      id: 4,
       name: "Relaxed Fit Light Jeans",
       price: 69.90,
       images: [
-        "/lovable-uploads/516f096a-295f-49cc-bde4-3867ada68f4b.png",
-        "/lovable-uploads/e9a63e25-5613-4fd1-a001-9b88c21f8168.png"
+        "/lovable-uploads/94a76c7e-af34-4973-b462-5b3c66b5ccaf.png",
+        "/lovable-uploads/119077b8-96f2-48de-8466-e14df5917db1.png"
       ],
       color: "Light Wash",
       isSale: false,
@@ -472,7 +426,7 @@ const MenJeans = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8 mb-16">
             {products.map((product, index) => (
               <motion.div
                 key={product.id}
