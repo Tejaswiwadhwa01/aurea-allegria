@@ -1,14 +1,16 @@
+
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import CartButton from "@/components/CartButton";
-import { Heart, User, Menu, X, ShoppingBag, ChevronDown } from "lucide-react";
+import { Heart, User, Menu, X, ShoppingBag, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
 
 const MenBlazers = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showWomenDropdown, setShowWomenDropdown] = useState(false);
   const [showMenDropdown, setShowMenDropdown] = useState(false);
+  const [currentImageIndexes, setCurrentImageIndexes] = useState<{ [key: number]: number }>({});
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,70 +50,70 @@ const MenBlazers = () => {
     }),
   };
 
+  const handlePrevImage = (productId: number) => {
+    setCurrentImageIndexes((prev) => {
+      const currentIndex = prev[productId] || 0;
+      const product = products.find(p => p.id === productId);
+      const imageCount = product?.images.length || 0;
+      const newIndex = (currentIndex - 1 + imageCount) % imageCount;
+      return { ...prev, [productId]: newIndex };
+    });
+  };
+
+  const handleNextImage = (productId: number) => {
+    setCurrentImageIndexes((prev) => {
+      const currentIndex = prev[productId] || 0;
+      const product = products.find(p => p.id === productId);
+      const imageCount = product?.images.length || 0;
+      const newIndex = (currentIndex + 1) % imageCount;
+      return { ...prev, [productId]: newIndex };
+    });
+  };
+
   const products = [
     {
       id: 1,
-      name: "Double Breasted Blazer",
+      name: "Double Breasted Light Gray Blazer",
       price: 169.90,
-      image: "/lovable-uploads/bdfb4268-766c-4592-8b8a-74129dad3352.png",
+      images: [
+        "/lovable-uploads/bbc53d42-3a63-47de-8a47-9520599dc427.png",
+        "/lovable-uploads/b81ed94e-4343-4344-a0e2-21098b6a1f0e.png"
+      ],
       color: "Light Gray",
       isSale: false
     },
     {
       id: 2,
-      name: "Classic Fit Blazer",
-      price: 159.90,
-      image: "/lovable-uploads/d6c2fd05-8a7c-4315-a243-e68e8e52f909.png",
-      color: "Gray",
-      isSale: false
-    },
-    {
-      id: 3,
-      name: "Structured Blazer",
+      name: "Structured Navy Blue Blazer",
       price: 149.90,
-      image: "/lovable-uploads/110f9e73-bd3c-43b3-b15b-f8275a3b9bf3.png",
+      images: [
+        "/lovable-uploads/cff1d9dc-2cf7-4ea1-956c-10b4c4856ea6.png",
+        "/lovable-uploads/3d84dc42-66e1-4ad1-b7f6-33028664e630.png"
+      ],
       color: "Navy Blue",
       isSale: true,
       salePrice: 119.90
     },
     {
-      id: 4,
-      name: "Slim Fit Blazer",
-      price: 179.90,
-      image: "/lovable-uploads/b983d79d-5727-455d-9e9f-b18c47157b2b.png",
-      color: "Navy Blue",
-      isSale: false
-    },
-    {
-      id: 5,
+      id: 3,
       name: "Double Breasted Cream Blazer",
       price: 165.90,
-      image: "/lovable-uploads/53e881e8-553b-4b4a-8e0d-14e0b1b979c1.png",
+      images: [
+        "/lovable-uploads/5b0f1cde-f4b1-4242-92b6-a96dcc9a7ded.png",
+        "/lovable-uploads/dc438382-e0f8-4c2a-9213-54ad25fa0ae8.png"
+      ],
       color: "Cream",
       isSale: true,
       salePrice: 129.90
     },
     {
-      id: 6,
-      name: "Linen Blend Blazer",
-      price: 189.90,
-      image: "/lovable-uploads/f390be45-e10f-4385-9ea6-daa3457951cb.png",
-      color: "Cream",
-      isSale: false
-    },
-    {
-      id: 7,
-      name: "Formal Blazer",
-      price: 199.90,
-      image: "/lovable-uploads/087af264-1542-4a3e-b70d-d54edde9d8b7.png",
-      color: "Black",
-      isSale: false
-    },
-    {
-      id: 8,
+      id: 4,
       name: "Classic Black Blazer",
       price: 189.90,
-      image: "/lovable-uploads/8e14a9ae-8a47-45ce-8cb4-79abf01f95b1.png",
+      images: [
+        "/lovable-uploads/a88f120a-0c01-4429-b1c6-71b8a850d6ef.png",
+        "/lovable-uploads/b84e6bb1-207f-4ee2-b7a1-5091adc2306c.png"
+      ],
       color: "Black",
       isSale: false
     }
@@ -432,7 +434,7 @@ const MenBlazers = () => {
             </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-8 mb-16">
             {products.map((product, index) => (
               <motion.div
                 key={product.id}
@@ -445,7 +447,7 @@ const MenBlazers = () => {
               >
                 <div className="relative aspect-[3/4] overflow-hidden mb-4">
                   <img
-                    src={product.image}
+                    src={product.images[currentImageIndexes[product.id] || 0]}
                     alt={product.name}
                     className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105"
                   />
@@ -455,6 +457,29 @@ const MenBlazers = () => {
                     </div>
                   )}
                   <div className="absolute inset-0 bg-black/10 opacity-0 group-hover:opacity-100 transition-opacity" />
+                  
+                  <button
+                    aria-label="Previous image"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handlePrevImage(product.id);
+                    }}
+                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  
+                  <button
+                    aria-label="Next image"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleNextImage(product.id);
+                    }}
+                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 p-1 rounded-full opacity-0 group-hover:opacity-100 transition-opacity hover:bg-white"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                  
                   <button
                     aria-label="Add to cart"
                     className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm px-6 py-3 text-sm flex items-center border border-[#d1c9c0] shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white"
@@ -468,6 +493,25 @@ const MenBlazers = () => {
                   >
                     <Heart size={16} />
                   </button>
+                  
+                  {/* Image navigation dots */}
+                  <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex space-x-1">
+                    {product.images.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setCurrentImageIndexes((prev) => ({ ...prev, [product.id]: i }));
+                        }}
+                        className={`w-1.5 h-1.5 rounded-full ${
+                          (currentImageIndexes[product.id] || 0) === i
+                            ? "bg-white"
+                            : "bg-white/50"
+                        } transition-all opacity-0 group-hover:opacity-100`}
+                        aria-label={`View image ${i + 1}`}
+                      />
+                    ))}
+                  </div>
                 </div>
                 <div className="text-center">
                   <h3 className="text-base font-medium mb-1">{product.name}</h3>
