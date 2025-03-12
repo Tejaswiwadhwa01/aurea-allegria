@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -214,7 +215,7 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <section className="relative h-screen-80 flex items-center justify-center overflow-hidden">
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <img
           src="/lovable-uploads/49a9954b-a965-458a-b293-052993986789.png"
           alt="Hero Image"
