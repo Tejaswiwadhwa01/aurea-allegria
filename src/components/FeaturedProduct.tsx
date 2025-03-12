@@ -5,6 +5,7 @@ import { Heart, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useFavorites } from "@/contexts/FavoritesContext";
 import { useToast } from "@/hooks/use-toast";
+import { formatIndianRupees } from "@/utils/formatCurrency";
 
 interface FeaturedProductProps {
   image: string;
@@ -47,13 +48,8 @@ const FeaturedProduct = ({
     }),
   };
 
-  // Format price in Indian Rupees
-  const formattedPrice = new Intl.NumberFormat('en-IN', {
-    style: 'currency',
-    currency: 'INR',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(price);
+  // Format price in Indian Rupees using the utility function
+  const formattedPrice = formatIndianRupees(price);
 
   const handleFavoriteToggle = () => {
     const product = {
