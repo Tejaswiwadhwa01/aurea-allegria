@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Heart, ShoppingBag, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
+import { formatIndianRupees } from "@/utils/formatCurrency";
 
 // Components
 import CartButton from "@/components/CartButton";
@@ -10,7 +11,7 @@ import CartButton from "@/components/CartButton";
 interface Product {
   id: number;
   name: string;
-  price: string;
+  price: string | number;
   images: string[];
   color: string;
   material: string;
@@ -27,7 +28,7 @@ const WomenJeans = () => {
     {
       id: 1,
       name: "Wide-Leg Trousers",
-      price: "290",
+      price: 14500,
       color: "Ivory",
       material: "Wool Blend",
       isNew: true,
@@ -39,7 +40,7 @@ const WomenJeans = () => {
     {
       id: 2,
       name: "High-Waisted Trousers",
-      price: "320",
+      price: 16000,
       color: "Light Gray",
       material: "Wool Blend",
       images: [
@@ -50,7 +51,7 @@ const WomenJeans = () => {
     {
       id: 3,
       name: "Barrel-Leg Jeans",
-      price: "260",
+      price: 13000,
       color: "Dark Gray",
       material: "100% Cotton",
       isNew: true,
@@ -62,7 +63,7 @@ const WomenJeans = () => {
     {
       id: 4,
       name: "Wide-Leg Jeans",
-      price: "240",
+      price: 12000,
       color: "Light Blue",
       material: "100% Cotton",
       images: [
@@ -256,7 +257,7 @@ const WomenJeans = () => {
               
               <div className="mt-4">
                 <h3 className="font-medium mb-1 transition-colors group-hover:text-[#a67c52]">{product.name}</h3>
-                <p className="text-[#595959] mb-1">${product.price}</p>
+                <p className="text-[#595959] mb-1">{formatIndianRupees(product.price)}</p>
                 <p className="text-[#595959] text-sm">{product.color} • {product.material}</p>
               </div>
             </motion.div>

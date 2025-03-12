@@ -9,7 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 interface FeaturedProductProps {
   image: string;
   name: string;
-  price: string;
+  price: number;
   index: number;
   id: number;
   images?: string[];
@@ -46,6 +46,14 @@ const FeaturedProduct = ({
       },
     }),
   };
+
+  // Format price in Indian Rupees
+  const formattedPrice = new Intl.NumberFormat('en-IN', {
+    style: 'currency',
+    currency: 'INR',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  }).format(price);
 
   const handleFavoriteToggle = () => {
     const product = {
@@ -137,7 +145,7 @@ const FeaturedProduct = ({
 
       <Link to={`/product/${id}`} className="block">
         <h3 className="font-medium mb-2 transition-colors group-hover:text-[#a67c52]">{name}</h3>
-        <p className="text-[#595959]">${price}</p>
+        <p className="text-[#595959]">{formattedPrice}</p>
       </Link>
     </motion.div>
   );

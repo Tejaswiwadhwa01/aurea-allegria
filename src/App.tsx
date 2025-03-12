@@ -19,6 +19,7 @@ import Collections from "./pages/Collections";
 import FeaturedCollections from "./pages/FeaturedCollections";
 import NotFound from "./pages/NotFound";
 import Favorites from "./pages/Favorites";
+import AboutUs from "./pages/AboutUs";
 
 // Styles
 import "./App.css";
@@ -42,6 +43,7 @@ function App() {
           <Route path="/collections" element={<Collections />} />
           <Route path="/featured-collections" element={<FeaturedCollections />} />
           <Route path="/favorites" element={<Favorites />} />
+          <Route path="/about" element={<AboutUs />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
         <Toaster />
