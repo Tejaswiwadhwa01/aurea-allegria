@@ -2,14 +2,26 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Heart, ShoppingBag, ChevronDown, Menu, X, User } from "lucide-react";
+import { Heart, ShoppingBag, ChevronDown, Menu, X, User, ChevronLeft, ChevronRight } from "lucide-react";
 import CartButton from "@/components/CartButton";
+import { useFavorites } from "@/contexts/FavoritesContext";
+import { useToast } from "@/hooks/use-toast";
 
 const WomenAccessories = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showWomenDropdown, setShowWomenDropdown] = useState(false);
   const [showMenDropdown, setShowMenDropdown] = useState(false);
+  const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
+  const { toast } = useToast();
+
+  // State to track which image is displayed for each product
+  const [activeImageIndices, setActiveImageIndices] = useState<{[key: number]: number}>({
+    1: 0,
+    2: 0,
+    3: 0, 
+    4: 0
+  });
 
   useEffect(() => {
     const handleScroll = () => {
@@ -36,54 +48,79 @@ const WomenAccessories = () => {
     setShowMenDropdown(!showMenDropdown);
   };
 
+  // Function to toggle between product images
+  const toggleImage = (productId: number, direction: 'next' | 'prev') => {
+    setActiveImageIndices(prev => {
+      const currentIndex = prev[productId] || 0;
+      const totalImages = 2; // Each product has 2 images
+      
+      if (direction === 'next') {
+        return { ...prev, [productId]: (currentIndex + 1) % totalImages };
+      } else {
+        return { ...prev, [productId]: (currentIndex - 1 + totalImages) % totalImages };
+      }
+    });
+  };
+
+  // Function to directly set the active image
+  const setActiveImage = (productId: number, index: number) => {
+    setActiveImageIndices(prev => ({ ...prev, [productId]: index }));
+  };
+
+  const handleFavoriteToggle = (product: any) => {
+    if (isFavorite(product.id)) {
+      removeFromFavorites(product.id);
+      toast({
+        title: "Removed from favorites",
+        description: `${product.name} has been removed from your favorites.`,
+        duration: 3000,
+      });
+    } else {
+      addToFavorites(product);
+      toast({
+        title: "Added to favorites",
+        description: `${product.name} has been added to your favorites.`,
+        duration: 3000,
+      });
+    }
+  };
+
   const products = [
     {
       id: 1,
       name: "Gold Twist Earrings",
       price: "89.99",
-      image: "/lovable-uploads/07870e4b-0f9d-4cd8-8421-39eff3d10467.png"
+      images: [
+        "/lovable-uploads/3234d689-76ab-4d76-b95f-1acd5cf19117.png",
+        "/lovable-uploads/3dea3ced-043b-46a1-8924-1cfe1e13e46c.png"
+      ]
     },
     {
       id: 2,
-      name: "Gold Knot Studs",
-      price: "69.99",
-      image: "/lovable-uploads/13e41aad-f838-4a2d-9392-5f6af86fef4d.png"
+      name: "Gold Charm Necklace",
+      price: "119.99",
+      images: [
+        "/lovable-uploads/16bc6a5f-a89a-44ce-84bc-f4e03d84ec11.png",
+        "/lovable-uploads/045abff5-adf5-40f2-8d61-32b6e52a035c.png"
+      ]
     },
     {
       id: 3,
-      name: "Gold Charm Necklace",
-      price: "119.99",
-      image: "/lovable-uploads/2de0879f-65eb-49a3-8d12-2bea1a1fcfc4.png"
+      name: "Gold Grid Cuff",
+      price: "109.99",
+      images: [
+        "/lovable-uploads/e18b15c0-a336-4dbf-835e-f38ce624f83c.png",
+        "/lovable-uploads/df8426b1-8451-47dd-8f57-16ab2f58587d.png"
+      ]
     },
     {
       id: 4,
-      name: "Gold Charm Bracelet",
-      price: "99.99",
-      image: "/lovable-uploads/b5ccc93e-da1d-4845-a8b0-b663264741a0.png"
-    },
-    {
-      id: 5,
-      name: "White Oversized Shirt",
-      price: "129.99",
-      image: "/lovable-uploads/28034428-b144-4b18-9326-dc69bcce56d0.png"
-    },
-    {
-      id: 6,
-      name: "Gold Grid Cuff",
-      price: "109.99",
-      image: "/lovable-uploads/12edc0e5-a2da-40c5-abdd-7580e4b868f5.png"
-    },
-    {
-      id: 7,
       name: "Pearl Ring Set",
       price: "159.99",
-      image: "/lovable-uploads/17760592-a234-41f0-a31a-c530a065c018.png"
-    },
-    {
-      id: 8,
-      name: "Textured Gold Ring Collection",
-      price: "199.99",
-      image: "/lovable-uploads/5e1afb42-1c0e-4b45-9b49-62a1727f19d1.png"
+      images: [
+        "/lovable-uploads/fb840484-134e-494e-adc7-539199b15d54.png",
+        "/lovable-uploads/39a9c19f-0a4e-43a2-9acb-2ac924b6212b.png"
+      ]
     }
   ];
 
@@ -238,7 +275,7 @@ const WomenAccessories = () => {
           </div>
 
           {/* Products Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 md:gap-10">
             {products.map((product, index) => (
               <motion.div
                 key={product.id}
@@ -247,14 +284,49 @@ const WomenAccessories = () => {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 className="group relative"
               >
-                <div className="aspect-[3/4] bg-[#e9e5e0] mb-4 overflow-hidden">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                  />
+                <div className="aspect-[3/4] bg-[#e9e5e0] mb-4 overflow-hidden relative">
+                  {product.images.map((image, imageIndex) => (
+                    <img
+                      key={imageIndex}
+                      src={image}
+                      alt={`${product.name} - View ${imageIndex + 1}`}
+                      className={`w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 absolute inset-0 
+                        ${activeImageIndices[product.id] === imageIndex ? 'opacity-100' : 'opacity-0'}`}
+                    />
+                  ))}
 
                   <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                  {/* Navigation arrows */}
+                  <button
+                    onClick={() => toggleImage(product.id, 'prev')}
+                    className="absolute left-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/70 hover:bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    aria-label="Previous image"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  
+                  <button
+                    onClick={() => toggleImage(product.id, 'next')}
+                    className="absolute right-4 top-1/2 -translate-y-1/2 w-10 h-10 bg-white/70 hover:bg-white rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+
+                  {/* Image indicator dots */}
+                  <div className="absolute bottom-4 left-0 right-0 flex justify-center space-x-2">
+                    {product.images.map((_, dotIndex) => (
+                      <button
+                        key={dotIndex}
+                        onClick={() => setActiveImage(product.id, dotIndex)}
+                        className={`w-2 h-2 rounded-full transition-colors duration-300 ${
+                          activeImageIndices[product.id] === dotIndex ? 'bg-[#a67c52]' : 'bg-white/50'
+                        }`}
+                        aria-label={`Go to image ${dotIndex + 1}`}
+                      />
+                    ))}
+                  </div>
 
                   <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transform translate-y-full group-hover:translate-y-0 transition-all duration-300">
                     <div className="flex justify-between items-center">
@@ -266,10 +338,19 @@ const WomenAccessories = () => {
                         <span>Add to Cart</span>
                       </button>
                       <button
-                        className="ml-3 p-3 border border-[#e2dcd5] hover:border-[#a67c52] transition-colors bg-white"
-                        aria-label="Add to favorites"
+                        onClick={() => handleFavoriteToggle(product)}
+                        className={`ml-3 p-3 border transition-colors ${
+                          isFavorite(product.id) 
+                            ? "border-[#a67c52] bg-[#a67c52]/10" 
+                            : "border-[#e2dcd5] hover:border-[#a67c52]"
+                        }`}
+                        aria-label={isFavorite(product.id) ? "Remove from favorites" : "Add to favorites"}
                       >
-                        <Heart size={18} />
+                        <Heart 
+                          size={18} 
+                          fill={isFavorite(product.id) ? "#a67c52" : "none"} 
+                          color={isFavorite(product.id) ? "#a67c52" : "currentColor"} 
+                        />
                       </button>
                     </div>
                   </div>
