@@ -55,7 +55,7 @@ const FeaturedProduct = ({
     const product = {
       id,
       name,
-      price,
+      price: price.toString(), // Convert number to string here
       images: images.length > 0 ? images : [image],
       color,
       material,
