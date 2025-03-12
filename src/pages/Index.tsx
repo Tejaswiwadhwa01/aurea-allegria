@@ -1,16 +1,20 @@
+
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, ShoppingBag, User, Menu, X, ArrowRight } from "lucide-react";
+import { Heart, ShoppingBag, User, Menu, X, ArrowRight, Mail, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
 
 // Components
 import CartButton from "@/components/CartButton";
 import FeaturedProduct from "@/components/FeaturedProduct";
 import Newsletter from "@/components/Newsletter";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
 const Index = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isLoginOpen, setIsLoginOpen] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
@@ -34,6 +38,17 @@ const Index = () => {
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const toggleLogin = () => {
+    setIsLoginOpen(!isLoginOpen);
+  };
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Handle login logic here
+    console.log("Login submitted");
+    setIsLoginOpen(false);
   };
 
   const fadeInUpVariants = {
@@ -107,17 +122,116 @@ const Index = () => {
             >
               <Heart size={20} />
             </Link>
-            <Link
-              to="/login"
-              className="hidden md:flex transition-opacity hover:opacity-70"
+            <button
+              onClick={toggleLogin}
+              className="transition-opacity hover:opacity-70"
               aria-label="Login"
             >
               <User size={20} />
-            </Link>
+            </button>
             <CartButton />
           </div>
         </div>
       </header>
+
+      {/* Login Modal */}
+      <AnimatePresence>
+        {isLoginOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-[60] overflow-y-auto flex items-center justify-center"
+            onClick={() => setIsLoginOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+              className="bg-white w-full max-w-md mx-4 p-8 rounded-lg shadow-xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-serif font-light tracking-wider">Sign In</h2>
+                <button
+                  onClick={() => setIsLoginOpen(false)}
+                  className="transition-opacity hover:opacity-70"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+              
+              <form onSubmit={handleLogin} className="space-y-6">
+                <div className="space-y-2">
+                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                    Email
+                  </label>
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+                    <Input
+                      id="email"
+                      type="email"
+                      placeholder="your.email@example.com"
+                      className="pl-10 w-full border-gray-300 focus:ring-[#a67c52] focus:border-[#a67c52]"
+                      required
+                    />
+                  </div>
+                </div>
+                
+                <div className="space-y-2">
+                  <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                    Password
+                  </label>
+                  <div className="relative">
+                    <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+                    <Input
+                      id="password"
+                      type="password"
+                      placeholder="••••••••"
+                      className="pl-10 w-full border-gray-300 focus:ring-[#a67c52] focus:border-[#a67c52]"
+                      required
+                    />
+                  </div>
+                </div>
+                
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center">
+                    <input
+                      id="remember-me"
+                      name="remember-me"
+                      type="checkbox"
+                      className="h-4 w-4 text-[#a67c52] focus:ring-[#a67c52] border-gray-300 rounded"
+                    />
+                    <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
+                      Remember me
+                    </label>
+                  </div>
+                  <a href="#" className="text-sm text-[#a67c52] hover:underline">
+                    Forgot password?
+                  </a>
+                </div>
+                
+                <div>
+                  <Button
+                    type="submit"
+                    className="w-full bg-[#262626] hover:bg-[#3a3a3a] text-white py-2 px-4 rounded-none focus:outline-none transition-colors duration-300"
+                  >
+                    Sign In
+                  </Button>
+                </div>
+                
+                <div className="text-center text-sm text-gray-600">
+                  Don't have an account?{" "}
+                  <a href="#" className="text-[#a67c52] hover:underline">
+                    Create an account
+                  </a>
+                </div>
+              </form>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* Mobile Menu Overlay */}
       <AnimatePresence>
@@ -179,13 +293,15 @@ const Index = () => {
               >
                 Contact Us
               </Link>
-              <Link
-                to="/login"
-                className="text-xl tracking-wide pb-4"
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                className="text-xl tracking-wide pb-4 text-left"
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  setIsLoginOpen(true);
+                }}
               >
                 Login
-              </Link>
+              </button>
             </div>
           </motion.div>
         )}
@@ -323,18 +439,21 @@ const Index = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             <FeaturedProduct
+              id="featured-1"
               image="/lovable-uploads/b5ccc93e-da1d-4845-a8b0-b663264741a0.png"
               name="Tailored Shirt"
               price="790"
               index={0}
             />
             <FeaturedProduct
+              id="featured-2"
               image="/lovable-uploads/0a1916ea-15f7-49fa-afc7-02fb3f034c72.png"
               name="Evening Dress"
               price="1,790"
               index={1}
             />
             <FeaturedProduct
+              id="featured-3"
               image="/lovable-uploads/8e5069b4-1059-4a78-950e-dbe06d15a4ba.png"
               name="Designer Blazer"
               price="2,250"
