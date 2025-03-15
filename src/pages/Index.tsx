@@ -38,7 +38,7 @@ const Index = () => {
           <FeaturedProduct
             id="w1"
             name="Classic White Blouse"
-            price="₹4,999"
+            price="4999"
             category="shirts"
             imageUrl="/lovable-uploads/23dd5301-7add-4182-ac74-708dcf012e83.png"
             link="/women/shirts"
@@ -46,7 +46,7 @@ const Index = () => {
           <FeaturedProduct
             id="w2"
             name="Elegant Evening Dress"
-            price="₹12,999"
+            price="12999"
             category="dresses"
             imageUrl="/lovable-uploads/9f9fdccf-d3a8-46da-b7e4-4f1ec9ca5774.png"
             link="/women/dresses"
@@ -54,7 +54,7 @@ const Index = () => {
           <FeaturedProduct
             id="w3"
             name="Tailored Denim Jeans"
-            price="₹7,499"
+            price="7499"
             category="jeans"
             imageUrl="/lovable-uploads/5fb886d7-b46f-489c-9e14-9413fa67c723.png"
             link="/women/jeans"
@@ -79,7 +79,7 @@ const Index = () => {
           <FeaturedProduct
             id="m1"
             name="Oxford Cotton Shirt"
-            price="₹5,999"
+            price="5999"
             category="shirts"
             imageUrl="/lovable-uploads/0add1fce-a6b1-41c0-952d-11a28bd00c28.png"
             link="/men/shirts"
@@ -87,7 +87,7 @@ const Index = () => {
           <FeaturedProduct
             id="m2"
             name="Premium Denim Jeans"
-            price="₹8,499"
+            price="8499"
             category="jeans"
             imageUrl="/lovable-uploads/1072cfc7-8d68-43ca-bec0-3411744d2ccd.png"
             link="/men/jeans"
@@ -95,7 +95,7 @@ const Index = () => {
           <FeaturedProduct
             id="m3"
             name="Tailored Wool Blazer"
-            price="₹16,999"
+            price="16999"
             category="blazers"
             imageUrl="/lovable-uploads/39a9c19f-0a4e-43a2-9acb-2ac924b6212b.png"
             link="/men/blazers"
