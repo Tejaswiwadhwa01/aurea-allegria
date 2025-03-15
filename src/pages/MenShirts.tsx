@@ -1,10 +1,10 @@
-
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Heart, ShoppingBag, ChevronDown, Menu, X, User, ChevronLeft, ChevronRight } from "lucide-react";
 import CartButton from "@/components/CartButton";
 import FeaturedProduct from "@/components/FeaturedProduct";
+import { formatIndianRupees } from "@/utils/formatCurrency";
 
 const MenShirts = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -93,7 +93,6 @@ const MenShirts = () => {
 
   return (
     <div className="min-h-screen bg-[#f8f5f2] text-[#262626]">
-      {/* Header/Navigation */}
       <header
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
           isScrolled ? "bg-white/90 backdrop-blur-md py-4 shadow-sm" : "py-6 bg-transparent"
@@ -225,7 +224,6 @@ const MenShirts = () => {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="pt-32 pb-20">
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row items-center justify-between mb-12">
@@ -241,7 +239,6 @@ const MenShirts = () => {
             </div>
           </div>
 
-          {/* Products Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-10 md:gap-12">
             {products.map((product, index) => (
               <motion.div
@@ -260,7 +257,6 @@ const MenShirts = () => {
 
                   <div className="absolute inset-0 bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
 
-                  {/* Image navigation buttons */}
                   <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 flex justify-between px-4">
                     <button 
                       onClick={() => handlePrevImage(product.id)}
@@ -278,7 +274,6 @@ const MenShirts = () => {
                     </button>
                   </div>
 
-                  {/* Image indicators */}
                   <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex space-x-2">
                     {product.images.map((_, idx) => (
                       <button
@@ -314,14 +309,13 @@ const MenShirts = () => {
                 </div>
 
                 <h3 className="font-medium mb-1 transition-colors group-hover:text-[#a67c52]">{product.name}</h3>
-                <p className="text-[#595959]">${product.price}</p>
+                <p className="text-[#595959]">{formatIndianRupees(product.price)}</p>
               </motion.div>
             ))}
           </div>
         </div>
       </main>
 
-      {/* Footer */}
       <footer className="bg-[#262626] text-[#e2dcd5] py-16">
         <div className="container mx-auto px-6">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-12 md:gap-8">
@@ -373,3 +367,5 @@ const MenShirts = () => {
 };
 
 export default MenShirts;
+
+
