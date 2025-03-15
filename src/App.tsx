@@ -2,6 +2,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Toaster } from "./components/ui/toaster";
 import { FavoritesProvider } from "./contexts/FavoritesContext";
+import { MainNav } from "./components/MainNav";
 
 // Pages
 import Index from "./pages/Index";
@@ -28,6 +29,7 @@ function App() {
   return (
     <FavoritesProvider>
       <Router>
+        <MainNav />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/women" element={<Women />} />
