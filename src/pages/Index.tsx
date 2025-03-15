@@ -232,7 +232,7 @@ const Index = () => {
             }}
             className="text-4xl md:text-6xl font-serif font-light text-white mb-4"
           >
-            Timeless Elegance, Redefined
+            AUREA
           </motion.h1>
           <motion.p
             initial="hidden"
@@ -243,7 +243,7 @@ const Index = () => {
             }}
             className="text-lg md:text-xl text-white opacity-80 mb-8"
           >
-            Explore our curated collection of premium fashion.
+            Timeless Elegance, Redefined
           </motion.p>
           <motion.div
             initial="hidden"
