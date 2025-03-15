@@ -1,12 +1,16 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 
-type Product = {
+export type Product = {
   id: string;
   name: string;
   price: string;
   category: string;
   imageUrl: string;
+  images?: string[]; // Added for ProductCard compatibility
+  isNew?: boolean;   // Added for ProductCard compatibility
+  color?: string;    // Added for ProductCard compatibility
+  material?: string; // Added for ProductCard compatibility
 };
 
 interface FavoritesContextType {

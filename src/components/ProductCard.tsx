@@ -3,8 +3,9 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { Heart, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useFavorites, Product } from "@/contexts/FavoritesContext";
+import { useFavorites } from "@/contexts/FavoritesContext";
 import { useToast } from "@/hooks/use-toast";
+import type { Product } from "@/contexts/FavoritesContext";
 
 interface ProductCardProps {
   product: Product;
@@ -59,12 +60,12 @@ const ProductCard = ({ product, index, onImageHover, hoveredProduct }: ProductCa
     >
       <div 
         className="group relative overflow-hidden"
-        onMouseEnter={() => onImageHover && onImageHover(product.id)}
+        onMouseEnter={() => onImageHover && onImageHover(parseInt(product.id))}
         onMouseLeave={() => onImageHover && onImageHover(null)}
       >
         <div className="aspect-[3/4] bg-[#e9e5e0] relative overflow-hidden">
           <img
-            src={hoveredProduct === product.id && product.images[1] ? product.images[1] : product.images[0]}
+            src={product.images && hoveredProduct === parseInt(product.id) && product.images[1] ? product.images[1] : product.images?.[0] || product.imageUrl}
             alt={product.name}
             className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />

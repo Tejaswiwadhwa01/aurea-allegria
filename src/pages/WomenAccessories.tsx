@@ -15,11 +15,11 @@ const WomenAccessories = () => {
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const { toast } = useToast();
 
-  const [activeImageIndices, setActiveImageIndices] = useState<{[key: number]: number}>({
-    1: 0,
-    2: 0,
-    3: 0, 
-    4: 0
+  const [activeImageIndices, setActiveImageIndices] = useState<{[key: string]: number}>({
+    "1": 0,
+    "2": 0,
+    "3": 0, 
+    "4": 0
   });
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const WomenAccessories = () => {
     setShowMenDropdown(!showMenDropdown);
   };
 
-  const toggleImage = (productId: number, direction: 'next' | 'prev') => {
+  const toggleImage = (productId: string, direction: 'next' | 'prev') => {
     setActiveImageIndices(prev => {
       const currentIndex = prev[productId] || 0;
       const totalImages = 2;
@@ -60,7 +60,7 @@ const WomenAccessories = () => {
     });
   };
 
-  const setActiveImage = (productId: number, index: number) => {
+  const setActiveImage = (productId: string, index: number) => {
     setActiveImageIndices(prev => ({ ...prev, [productId]: index }));
   };
 
@@ -84,7 +84,7 @@ const WomenAccessories = () => {
 
   const products = [
     {
-      id: 1,
+      id: "1",
       name: "Gold Twist Earrings",
       price: "89.99",
       images: [
@@ -93,7 +93,7 @@ const WomenAccessories = () => {
       ]
     },
     {
-      id: 2,
+      id: "2",
       name: "Gold Charm Necklace",
       price: "119.99",
       images: [
@@ -102,7 +102,7 @@ const WomenAccessories = () => {
       ]
     },
     {
-      id: 3,
+      id: "3",
       name: "Gold Grid Cuff",
       price: "109.99",
       images: [
@@ -111,7 +111,7 @@ const WomenAccessories = () => {
       ]
     },
     {
-      id: 4,
+      id: "4",
       name: "Pearl Ring Set",
       price: "159.99",
       images: [

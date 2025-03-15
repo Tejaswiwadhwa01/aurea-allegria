@@ -25,7 +25,7 @@ const Favorites = () => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleRemoveFavorite = (id: number, name: string) => {
+  const handleRemoveFavorite = (id: string, name: string) => {
     removeFromFavorites(id);
     toast({
       title: "Removed from favorites",
@@ -149,7 +149,7 @@ const Favorites = () => {
               >
                 <div className="aspect-[3/4] bg-[#e9e5e0] mb-4 overflow-hidden relative">
                   <img
-                    src={product.images[0]}
+                    src={product.images?.[0] || product.imageUrl}
                     alt={product.name}
                     className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
                   />
