@@ -20,15 +20,18 @@ import FeaturedCollections from "./pages/FeaturedCollections";
 import NotFound from "./pages/NotFound";
 import Favorites from "./pages/Favorites";
 import AboutUs from "./pages/AboutUs";
-
+import Signup from "./pages/Signup";
 // Styles
 import "./App.css";
+import Login from "./pages/Login";
 
 function App() {
   return (
     <FavoritesProvider>
       <Router>
         <Routes>
+          <Route path="/signup" element={<Signup />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<Index />} />
           <Route path="/women" element={<Women />} />
           <Route path="/women/jeans" element={<WomenJeans />} />

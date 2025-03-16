@@ -1,8 +1,7 @@
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Heart } from "lucide-react";
+import { Heart, User, LogOut, Package } from "lucide-react";
 
 // Components
 import FeaturedProduct from "@/components/FeaturedProduct";
@@ -128,8 +127,15 @@ const FeaturedProducts = () => {
 
 const Index = () => {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const userMenuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    // Check if user is logged in
+    const token = localStorage.getItem('token');
+    setIsLoggedIn(!!token);
+
     const handleScroll = () => {
       if (window.scrollY > 50) {
         setIsScrolled(true);
@@ -139,7 +145,20 @@ const Index = () => {
     };
 
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    
+    // Close menu when clicking outside
+    const handleClickOutside = (event: MouseEvent) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target as Node)) {
+        setIsUserMenuOpen(false);
+      }
+    };
+    
+    document.addEventListener("mousedown", handleClickOutside);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const fadeInUpVariants = {
@@ -201,7 +220,50 @@ const Index = () => {
             AUREA
           </Link>
 
-          <div className="flex items-center space-x-5">
+          <div className="flex items-center space-x-4">
+            <div className="relative" ref={userMenuRef}>
+              <button 
+                onClick={() => isLoggedIn ? setIsUserMenuOpen(!isUserMenuOpen) : window.location.href = '/login'}
+                className="transition-opacity hover:opacity-70 flex items-center"
+                aria-label="User account"
+              >
+                <User size={20} />
+              </button>
+              
+              {isLoggedIn && isUserMenuOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-50 border border-gray-100">
+                  <div className="px-4 py-2 text-sm text-gray-700 border-b border-gray-100">
+                    <p className="font-medium">My Account</p>
+                  </div>
+                  <Link
+                    to="/orders"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 flex items-center"
+                  >
+                    <Package size={16} className="mr-2" />
+                    My Orders
+                  </Link>
+                  <Link
+                    to="/profile"
+                    className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  >
+                    Profile Settings
+                  </Link>
+                  <button
+                    onClick={() => {
+                      localStorage.removeItem('token');
+                      setIsLoggedIn(false);
+                      setIsUserMenuOpen(false);
+                      window.location.href = '/';
+                    }}
+                    className="block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-100 flex items-center"
+                  >
+                    <LogOut size={16} className="mr-2" />
+                    Sign Out
+                  </button>
+                </div>
+              )}
+            </div>
+
             <Link
               to="/favorites"
               className="hidden md:flex transition-opacity hover:opacity-70"
