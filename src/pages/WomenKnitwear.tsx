@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Heart, ShoppingBag, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { formatIndianRupees } from "@/utils/formatCurrency";
-
+import { useCart } from "@/contexts/CartContext";
 // Components
 import CartButton from "@/components/CartButton";
 
@@ -22,6 +22,17 @@ const WomenKnitwear = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [viewType, setViewType] = useState<"grid" | "list">("grid");
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
+  const { addToCart } = useCart();
+
+  const handleAddToCart = (product: Product) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: typeof product.price === 'string' ? parseFloat(product.price) * 100 : product.price,
+      image: product.images[0],
+      color: product.color,
+    });
+  };
 
   // Sample products data with the uploaded images
   const products: Product[] = [
@@ -241,7 +252,8 @@ const WomenKnitwear = () => {
                     <button
                       className="flex items-center justify-center space-x-2 bg-[#262626] text-white py-3 px-5 text-sm hover:bg-[#333] transition-colors w-full"
                       aria-label="Add to cart"
-                    >
+                      onClick={() => handleAddToCart(product)}
+                    > 
                       <ShoppingBag size={16} />
                       <span>Add to Cart</span>
                     </button>

@@ -1,10 +1,11 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Heart, ShoppingBag } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useFavorites, Product } from "@/contexts/FavoritesContext";
 import { useToast } from "@/hooks/use-toast";
+import { useCart } from "@/contexts/CartContext";
+import { formatIndianRupees } from "@/utils/formatCurrency";
 
 interface ProductCardProps {
   product: Product;
@@ -16,6 +17,8 @@ interface ProductCardProps {
 const ProductCard = ({ product, index, onImageHover, hoveredProduct }: ProductCardProps) => {
   const { isFavorite, addToFavorites, removeFromFavorites } = useFavorites();
   const { toast } = useToast();
+  const { addToCart } = useCart();
+  const [hoveredImage, setHoveredImage] = useState(0);
   
   const handleFavoriteToggle = () => {
     if (isFavorite(product.id)) {
@@ -46,6 +49,23 @@ const ProductCard = ({ product, index, onImageHover, hoveredProduct }: ProductCa
         ease: [0.22, 1, 0.36, 1],
       },
     }),
+  };
+
+  // Format price for cart functionality
+  const getNumericPrice = (price: string | number): number => {
+    if (typeof price === 'number') return price;
+    return parseFloat(price) * 100; // Convert to cents
+  };
+  
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: getNumericPrice(product.price),
+      image: product.images[0],
+      color: product.color || '',
+      quantity: 1
+    });
   };
 
   return (
@@ -79,6 +99,7 @@ const ProductCard = ({ product, index, onImageHover, hoveredProduct }: ProductCa
         <div className="absolute bottom-0 left-0 right-0 p-4 bg-white bg-opacity-95 backdrop-blur-sm transform transition-transform duration-500 translate-y-full group-hover:translate-y-0">
           <div className="flex justify-between items-center">
             <button
+              onClick={handleAddToCart}
               className="flex items-center justify-center space-x-2 bg-[#262626] text-white py-3 px-5 text-sm hover:bg-[#333] transition-colors w-full"
               aria-label="Add to cart"
             >
@@ -102,7 +123,7 @@ const ProductCard = ({ product, index, onImageHover, hoveredProduct }: ProductCa
       
       <div className="mt-4">
         <h3 className="font-medium mb-1 transition-colors group-hover:text-[#a67c52]">{product.name}</h3>
-        <p className="text-[#595959] mb-1">${product.price}</p>
+        <p className="text-[#595959] mb-1">{formatIndianRupees(product.price)}</p>
         {product.color && product.material && (
           <p className="text-[#595959] text-sm">{product.color} • {product.material}</p>
         )}

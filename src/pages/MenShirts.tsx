@@ -5,6 +5,7 @@ import { Heart, ShoppingBag, ChevronDown, Menu, X, User, ChevronLeft, ChevronRig
 import CartButton from "@/components/CartButton";
 import FeaturedProduct from "@/components/FeaturedProduct";
 import { formatIndianRupees } from "@/utils/formatCurrency";
+import { useCart } from "@/contexts/CartContext";
 
 const MenShirts = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -12,6 +13,7 @@ const MenShirts = () => {
   const [showWomenDropdown, setShowWomenDropdown] = useState(false);
   const [showMenDropdown, setShowMenDropdown] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState<Record<number, number>>({});
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,11 +54,21 @@ const MenShirts = () => {
     }));
   };
 
+  const handleAddToCart = (product: any) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: typeof product.price === 'string' ? parseFloat(product.price) * 100 : product.price,
+      image: product.images[0],
+      color: product.color || '',
+    });
+  };
+
   const products = [
     {
       id: 1,
       name: "Black Formal Shirt",
-      price: "89.99",
+      price: 8999,
       images: [
         "/lovable-uploads/fd880c76-67f0-4f43-98ab-523d37ccf6a8.png",
         "/lovable-uploads/4fc87612-daf4-426d-b6ad-fec78f6900ca.png"
@@ -65,7 +77,7 @@ const MenShirts = () => {
     {
       id: 2,
       name: "Blue Striped Shirt",
-      price: "69.99",
+      price: 6999,
       images: [
         "/lovable-uploads/827d96b9-68a1-4cdb-a89f-bced5e57cd62.png",
         "/lovable-uploads/ef4f5a58-af71-4ede-9eb7-a78ff44e981b.png"
@@ -74,7 +86,7 @@ const MenShirts = () => {
     {
       id: 3,
       name: "Beige Linen Shirt",
-      price: "65.99",
+      price: 6599,
       images: [
         "/lovable-uploads/da505da3-3aeb-48e8-ac09-f25d7fe54a51.png",
         "/lovable-uploads/9e49cec3-e031-4e36-aacc-4e504e4a13c2.png"
@@ -83,7 +95,7 @@ const MenShirts = () => {
     {
       id: 4,
       name: "Beige Striped Shirt",
-      price: "69.99",
+      price: 6999,
       images: [
         "/lovable-uploads/154ea1be-0a90-4084-bd82-abda73c9fb10.png",
         "/lovable-uploads/e0ceb2a3-21ee-47f8-b042-b16ca61ff77c.png"
@@ -292,6 +304,7 @@ const MenShirts = () => {
                   <div className="absolute bottom-0 left-0 right-0 p-4 opacity-0 group-hover:opacity-100 transform translate-y-full group-hover:translate-y-0 transition-all duration-300">
                     <div className="flex justify-between items-center">
                       <button
+                        onClick={() => handleAddToCart(product)}
                         className="flex items-center justify-center space-x-2 bg-[#262626] text-white py-3 px-5 text-sm hover:bg-[#333] transition-colors w-full"
                         aria-label="Add to cart"
                       >

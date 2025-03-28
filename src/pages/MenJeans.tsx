@@ -3,6 +3,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import CartButton from "@/components/CartButton";
 import { Heart, User, Menu, X, ShoppingBag, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
+import { Product } from "@/contexts/FavoritesContext";
+import { formatIndianRupees } from "@/utils/formatCurrency";
 
 const MenJeans = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -10,7 +13,7 @@ const MenJeans = () => {
   const [showWomenDropdown, setShowWomenDropdown] = useState(false);
   const [showMenDropdown, setShowMenDropdown] = useState(false);
   const [activeImageIndex, setActiveImageIndex] = useState<Record<number, number>>({});
-
+  const { addToCart } = useCart();
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -63,11 +66,21 @@ const MenJeans = () => {
     }),
   };
 
+  const handleAddToCart = (product: Product) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: typeof product.price === 'string' ? parseFloat(product.price) : product.price,
+      image: product.images[0],
+      color: product.color,
+    });
+  };
+
   const products = [
     {
       id: 1,
       name: "Formal Wool Trousers",
-      price: 89.90,
+      price: 8999,
       images: [
         "/lovable-uploads/4909147a-0154-4ab7-9c19-c34a8f9c06b7.png",
         "/lovable-uploads/ccdccb8b-7e4a-497f-8987-1411ac3b07bf.png"
@@ -78,19 +91,19 @@ const MenJeans = () => {
     {
       id: 2,
       name: "Utility Cargo Pants",
-      price: 79.90,
+      price: 7999,
       images: [
         "/lovable-uploads/70af653b-36a6-4098-83da-e39456ffa189.png",
         "/lovable-uploads/ebda48de-45c3-41eb-bc99-2a9e83f6ce85.png"
       ],
       color: "Beige",
       isSale: true,
-      salePrice: 59.90,
+      salePrice: 5999,
     },
     {
       id: 3,
       name: "Straight Fit Jeans",
-      price: 69.90,
+      price: 6999,
       images: [
         "/lovable-uploads/78861e34-e394-43db-a2d8-a9b2488887a1.png",
         "/lovable-uploads/a180905d-8f11-4105-997d-63c8f31c3017.png"
@@ -101,7 +114,7 @@ const MenJeans = () => {
     {
       id: 4,
       name: "Relaxed Fit Light Jeans",
-      price: 69.90,
+      price: 6999,
       images: [
         "/lovable-uploads/94a76c7e-af34-4973-b462-5b3c66b5ccaf.png",
         "/lovable-uploads/119077b8-96f2-48de-8466-e14df5917db1.png"
@@ -486,6 +499,7 @@ const MenJeans = () => {
                   
                   <button
                     aria-label="Add to cart"
+                    onClick={() => handleAddToCart(product)}
                     className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm px-6 py-3 text-sm flex items-center border border-[#d1c9c0] shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white"
                   >
                     <ShoppingBag size={16} className="mr-2" />
@@ -504,11 +518,15 @@ const MenJeans = () => {
                   <p className="text-sm">
                     {product.isSale ? (
                       <>
-                        <span className="line-through text-[#8c8c8c] mr-2">${product.price.toFixed(2)}</span>
-                        <span className="text-[#a67c52]">${product.salePrice?.toFixed(2)}</span>
+                        <span className="line-through text-[#8c8c8c] mr-2">
+                          {formatIndianRupees(product.price)}
+                        </span>
+                        <span className="text-[#a67c52]">
+                          {formatIndianRupees(product.salePrice || 0)}
+                        </span>
                       </>
                     ) : (
-                      <span>${product.price.toFixed(2)}</span>
+                      <span>{formatIndianRupees(product.price)}</span>
                     )}
                   </p>
                 </div>

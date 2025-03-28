@@ -278,11 +278,6 @@ const Index = () => {
 
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        <img
-          src="/lovable-uploads/49a9954b-a965-458a-b293-052993986789.png"
-          alt="Hero Image"
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
         <div className="absolute inset-0 bg-black/40"></div>
         <div className="container mx-auto px-6 text-center relative z-10">
           <motion.h1

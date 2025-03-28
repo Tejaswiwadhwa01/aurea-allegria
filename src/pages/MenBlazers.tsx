@@ -1,9 +1,10 @@
-
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import CartButton from "@/components/CartButton";
 import { Heart, User, Menu, X, ShoppingBag, ChevronDown, ChevronLeft, ChevronRight } from "lucide-react";
+import { useCart } from "@/contexts/CartContext";
+import { formatIndianRupees } from "@/utils/formatCurrency";
 
 const MenBlazers = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,6 +12,7 @@ const MenBlazers = () => {
   const [showWomenDropdown, setShowWomenDropdown] = useState(false);
   const [showMenDropdown, setShowMenDropdown] = useState(false);
   const [currentImageIndexes, setCurrentImageIndexes] = useState<{ [key: number]: number }>({});
+  const { addToCart } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -70,11 +72,21 @@ const MenBlazers = () => {
     });
   };
 
+  const handleAddToCart = (product: any) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: typeof product.price === 'string' ? parseFloat(product.price) * 100 : product.price,
+      image: product.images[0],
+      color: product.color || '',
+    });
+  };
+
   const products = [
     {
       id: 1,
       name: "Double Breasted Light Gray Blazer",
-      price: 169.90,
+      price: 16990,
       images: [
         "/lovable-uploads/bbc53d42-3a63-47de-8a47-9520599dc427.png",
         "/lovable-uploads/b81ed94e-4343-4344-a0e2-21098b6a1f0e.png"
@@ -85,31 +97,31 @@ const MenBlazers = () => {
     {
       id: 2,
       name: "Structured Navy Blue Blazer",
-      price: 149.90,
+      price: 14990,
       images: [
         "/lovable-uploads/cff1d9dc-2cf7-4ea1-956c-10b4c4856ea6.png",
         "/lovable-uploads/3d84dc42-66e1-4ad1-b7f6-33028664e630.png"
       ],
       color: "Navy Blue",
       isSale: true,
-      salePrice: 119.90
+      salePrice: 11990
     },
     {
       id: 3,
       name: "Double Breasted Cream Blazer",
-      price: 165.90,
+      price: 16590,
       images: [
         "/lovable-uploads/5b0f1cde-f4b1-4242-92b6-a96dcc9a7ded.png",
         "/lovable-uploads/dc438382-e0f8-4c2a-9213-54ad25fa0ae8.png"
       ],
       color: "Cream",
       isSale: true,
-      salePrice: 129.90
+      salePrice: 12990
     },
     {
       id: 4,
       name: "Classic Black Blazer",
-      price: 189.90,
+      price: 18990,
       images: [
         "/lovable-uploads/a88f120a-0c01-4429-b1c6-71b8a850d6ef.png",
         "/lovable-uploads/b84e6bb1-207f-4ee2-b7a1-5091adc2306c.png"
@@ -482,6 +494,7 @@ const MenBlazers = () => {
                   
                   <button
                     aria-label="Add to cart"
+                    onClick={() => handleAddToCart(product)}
                     className="absolute bottom-4 left-1/2 -translate-x-1/2 bg-white/90 backdrop-blur-sm px-6 py-3 text-sm flex items-center border border-[#d1c9c0] shadow-sm opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-white"
                   >
                     <ShoppingBag size={16} className="mr-2" />
@@ -519,11 +532,11 @@ const MenBlazers = () => {
                   <p className="text-sm">
                     {product.isSale ? (
                       <>
-                        <span className="line-through text-[#8c8c8c] mr-2">${product.price.toFixed(2)}</span>
-                        <span className="text-[#a67c52]">${product.salePrice?.toFixed(2)}</span>
+                        <span className="line-through text-[#8c8c8c] mr-2">{formatIndianRupees(product.price)}</span>
+                        <span className="text-[#a67c52]">{formatIndianRupees(product.salePrice || 0)}</span>
                       </>
                     ) : (
-                      <span>${product.price.toFixed(2)}</span>
+                      <span>{formatIndianRupees(product.price)}</span>
                     )}
                   </p>
                 </div>

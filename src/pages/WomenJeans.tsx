@@ -1,9 +1,9 @@
-
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Heart, ShoppingBag, ArrowLeft } from "lucide-react";
 import { Link } from "react-router-dom";
 import { formatIndianRupees } from "@/utils/formatCurrency";
+import { useCart } from "@/contexts/CartContext";
 
 // Components
 import CartButton from "@/components/CartButton";
@@ -22,6 +22,7 @@ const WomenJeans = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [viewType, setViewType] = useState<"grid" | "list">("grid");
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
+  const { addToCart } = useCart();
 
   // Sample products data with the uploaded images
   const products: Product[] = [
@@ -97,6 +98,16 @@ const WomenJeans = () => {
         ease: [0.22, 1, 0.36, 1],
       },
     }),
+  };
+
+  const handleAddToCart = (product: Product) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: typeof product.price === 'string' ? parseFloat(product.price) * 100 : product.price,
+      image: product.images[0],
+      color: product.color,
+    });
   };
 
   return (
@@ -239,6 +250,7 @@ const WomenJeans = () => {
                 <div className="absolute bottom-0 left-0 right-0 p-4 bg-white bg-opacity-95 backdrop-blur-sm transform transition-transform duration-500 translate-y-full group-hover:translate-y-0">
                   <div className="flex justify-between items-center">
                     <button
+                      onClick={() => handleAddToCart(product)}
                       className="flex items-center justify-center space-x-2 bg-[#262626] text-white py-3 px-5 text-sm hover:bg-[#333] transition-colors w-full"
                       aria-label="Add to cart"
                     >

@@ -13,6 +13,8 @@ const Login: React.FC = () => {
     password: '',
     confirmPassword: ''
   });
+  const [loginError, setLoginError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
 //   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 //     console.log("Im being called")
@@ -57,13 +59,38 @@ const Login: React.FC = () => {
     return valid;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.MouseEvent) => {
     e.preventDefault();
     
     if (validateForm()) {
-      // Handle signup logic here
-      console.log('Form submitted:', email, password);
-    
+      setIsLoading(true);
+      setLoginError('');
+      
+      try {
+        const response = await fetch("http://localhost:3000/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify({email, password})
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+          // Success - store token and redirect
+          localStorage.setItem("token", data.token);
+          navigate("/");
+        } else {
+          // Handle error response from server
+          setLoginError(data.message || 'Invalid email or password');
+        }
+      } catch (error) {
+        setLoginError('Network error. Please try again.');
+        console.error('Login error:', error);
+      } finally {
+        setIsLoading(false);
+      }
     }
   };
 
@@ -85,7 +112,14 @@ const Login: React.FC = () => {
           </div>
 
           <div className="mt-8">
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-6" onSubmit={(e) => e.preventDefault()}>
+              {/* Show login error message if any */}
+              {loginError && (
+                <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
+                  {loginError}
+                </div>
+              )}
+              
               <div>
                 <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                   Email address
@@ -147,34 +181,30 @@ const Login: React.FC = () => {
                 {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password}</p>}
               </div>
 
-              
-
               <div>
                 <button
                   type="submit"
-                  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200"
-                  onClick={async () => {
-                    const response = await fetch("http://localhost:3000/login", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json"
-                        },
-                        body: JSON.stringify({email, password})
-                    })
-                    const data = await response.json();
-                    localStorage.setItem("token", data.token)
-                    navigate("/")
-                    console.log(data);
-                  }}
+                  disabled={isLoading}
+                  className={`w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white ${
+                    isLoading ? 'bg-indigo-400 cursor-not-allowed' : 'bg-indigo-600 hover:bg-indigo-700'
+                  } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-colors duration-200`}
+                  onClick={handleLogin}
                 >
-                  Sign In
+                  {isLoading ? 'Signing in...' : 'Sign In'}
                 </button>
               </div>
             </form>
 
+            <div className="mt-4 text-center">
+              <button 
+                onClick={() => navigate('/forgot-password')}
+                className="text-sm text-indigo-600 hover:text-indigo-500"
+              >
+                Forgot your password?
+              </button>
+            </div>
           </div>
         </div>
-        
       </div>
     </div>
   );

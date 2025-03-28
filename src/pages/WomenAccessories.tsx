@@ -3,9 +3,10 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Heart, ShoppingBag, ChevronDown, Menu, X, User, ChevronLeft, ChevronRight } from "lucide-react";
 import CartButton from "@/components/CartButton";
-import { useFavorites } from "@/contexts/FavoritesContext";
+import { Product, useFavorites } from "@/contexts/FavoritesContext";
 import { useToast } from "@/hooks/use-toast";
 import { formatIndianRupees } from "@/utils/formatCurrency";
+import { useCart } from "@/contexts/CartContext";
 
 const WomenAccessories = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -14,7 +15,7 @@ const WomenAccessories = () => {
   const [showMenDropdown, setShowMenDropdown] = useState(false);
   const { addToFavorites, removeFromFavorites, isFavorite } = useFavorites();
   const { toast } = useToast();
-
+  const { addToCart } = useCart();
   const [activeImageIndices, setActiveImageIndices] = useState<{[key: number]: number}>({
     1: 0,
     2: 0,
@@ -80,6 +81,16 @@ const WomenAccessories = () => {
         duration: 3000,
       });
     }
+  };
+  
+  const handleAddToCart = (product: Product) => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: typeof product.price === 'string' ? parseFloat(product.price) * 100 : product.price,
+      image: product.images[0],
+      color: product.color,
+    });
   };
 
   const products = [
@@ -325,6 +336,7 @@ const WomenAccessories = () => {
                       <button
                         className="flex items-center justify-center space-x-2 bg-[#262626] text-white py-3 px-5 text-sm hover:bg-[#333] transition-colors w-full"
                         aria-label="Add to cart"
+                        onClick={() => handleAddToCart(product)}
                       >
                         <ShoppingBag size={16} />
                         <span>Add to Cart</span>
